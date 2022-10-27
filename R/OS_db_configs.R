@@ -1,7 +1,7 @@
 # database functies Onderzoek en Statistiek
 
 library(yaml)
-library(dbconnect)
+library(DBI)
 
 db_con_ar <- function(db_config = NULL){
   
