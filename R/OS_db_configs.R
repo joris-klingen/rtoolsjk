@@ -1,8 +1,13 @@
 # database functies Onderzoek en Statistiek
 
-db_con_ar <- function(){
+db_con_ar <- function(db_config = NULL){
   
-  db_config <- yaml.load_file("H:/db_configs/referentiedb.yml")$default
+
+  if(in_adw()){
+    db_config <- yaml.load_file("H:/db_configs/analyse_ruimte.yml")$default
+  } else {
+    # to do: get dbconfig van windows credential store 
+  }
   
   con <- dbConnect(RPostgres::Postgres(),
                    host = "10.243.17.34",
@@ -16,12 +21,18 @@ db_con_ar <- function(){
 
 
 
-db_con_ar <- function(){
+db_con_ref <- function(db_config = NULL){
   
   library(yaml)
   library(DBI)
   
-  db_config <- yaml.load_file("H:/db_configs/analyse_ruimte.yml")$default
+  
+  if(in_adw()){
+    db_config <- yaml.load_file("H:/db_configs/referentiedb.yml")$default
+  } else {
+    # to do: get dbconfig van windows credential store 
+  }
+  
   
   con <- dbConnect(RPostgres::Postgres(),
                    host = db_config$host,
