@@ -1,5 +1,7 @@
 # database functies Onderzoek en Statistiek
 
+library(yaml)
+
 db_con_ar <- function(db_config = NULL){
   
 
