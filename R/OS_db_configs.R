@@ -1,6 +1,7 @@
 # database functies Onderzoek en Statistiek
 
 library(yaml)
+library(dbconnect)
 
 db_con_ar <- function(db_config = NULL){
   
@@ -12,11 +13,11 @@ db_con_ar <- function(db_config = NULL){
   }
   
   con <- dbConnect(RPostgres::Postgres(),
-                   host = "10.243.17.34",
-                   dbname = "mdbdataservices",
+                   host = db_config$host,
+                   dbname = db_config$dbname,
                    user = db_config$user,
                    password = db_config$password,
-                   port = "5432",
+                   port = db_config$port,
                    bigint="integer")
   
 }
