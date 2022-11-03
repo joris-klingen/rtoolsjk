@@ -12,6 +12,4 @@ Collectie van functies om verbinding te maken met databases zoals de referentied
 
 Functies om excel tabellen de maken in O&S huiststijl
 
-### OS_lookups.R
 
-Lijsten met standaard opzoektabellen zoals stadsdeelcodes etc
