@@ -12,4 +12,3 @@ Collectie van functies om verbinding te maken met databases zoals de referentied
 
 Functies om excel tabellen de maken in O&S huiststijl
 
-test
