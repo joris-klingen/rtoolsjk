@@ -1,0 +1,10 @@
+ruimte_analyse222:
+  user: "henkdeboer"
+  host: "12.23.45.56"
+  port: "5678"
+  dbname: "amsterdam"
+referenctie_database_prod:
+  user: ""
+  host: ""
+  port: ""
+  dbname: ""
