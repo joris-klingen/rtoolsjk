@@ -5,6 +5,7 @@
 # Last update: 31-08-2022
 
 library(openxlsx)
+library(purrr)
 
 # Define styles
 
@@ -67,6 +68,7 @@ ois_table <- function(df, path, sheet_name="Sheet1", add_perc_to_cols = NULL, le
 
 
 style_sheet <- function(wb, df, sheet_name, add_perc_to_cols, left_align_cols){
+  styles <- get_table_styles()
   addWorksheet(wb, sheet_name, gridLines = TRUE)
   writeData(wb, sheet_name, df, withFilter = T)
   
@@ -93,4 +95,17 @@ style_sheet <- function(wb, df, sheet_name, add_perc_to_cols, left_align_cols){
   
   # Set column width to 1.5 times the amount of chars
   setColWidths(wb, sheet_name, cols, widths = nchar(names(df)) + 4)
+}
+
+
+write_named_list_with_styling <- function(named_list, path){
+  wb <- createWorkbook()
+  styles <- get_table_styles()
+  
+  for (name in names(named_list)){
+    df <- named_list[[name]]
+    style_sheet(wb, df, name, NULL, NULL)
+  }
+  
+  saveWorkbook(wb, path)
 }
