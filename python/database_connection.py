@@ -1,0 +1,90 @@
+from __future__ import annotations
+
+import getpass
+from typing import Optional
+
+import keyring
+import yaml
+
+
+def get_db_connection_strings(
+    path: str, reset_pw: Optional[list[str]] = None
+) -> DbStringCollection:
+    """_summary_
+
+    Args:
+        path (str): _description_
+        flush_pw (Optional[list[str]], optional): List with passwords to be reset. Use the
+            name of the database connection in the config file. Defaults to None.
+
+    Returns:
+        DbStringCollection: Simple class with an attribute for each connection string
+    """
+    with open(path) as f:
+        db_info = yaml.safe_load(f)
+
+    dsc = DbStringCollection()
+
+    for dbname, params in db_info.items():
+        flush = dbname in reset_pw if reset_pw else False
+        pw = get_pw_from_keyring(dbname=dbname, user=params["user"], reset_pw=flush)
+        engine = build_conn_string(pw=pw, **params)
+        dsc.add_conn_string(dbname, engine)
+
+    return dsc
+
+
+def build_conn_string(user: str, pw: str, host: str, port: str, dbname: str) -> str:
+    """_summary_
+
+    Args:
+        user (str): username
+        pw (str): database password
+        host (str): database host
+        port (str): database port
+        dbname (str): database name
+
+    Returns:
+        str: engine string
+    """
+    return f"postgresql://{user}:{pw}@{host}:{port}/{dbname}"
+
+
+def get_pw_from_keyring(dbname: str, user: str, reset_pw: Optional[bool] = None) -> str:
+    """_summary_
+
+    Args:
+        db_name (str): database name
+        user (str): username
+
+    Returns:
+        str: password
+    """
+    pw = keyring.get_password(dbname, user)
+
+    if not pw or reset_pw:
+        pw = getpass.getpass(f"Input password for {dbname}: ")
+        keyring.set_password(dbname, user, pw)
+
+    return pw
+
+
+class DbStringCollection:
+    """_summary_"""
+
+    def add_conn_string(self, db_name: str, connection_str: str) -> None:
+        setattr(self, db_name, connection_str)
+
+
+if __name__ == "__main__":
+    # Examples
+
+    # Get database connection settings from yaml
+    engine_strings = get_db_connection_strings("python/database_config.yml")
+    print(engine_strings.ruimte_analyse222)
+
+    # Get database connection settings from yaml and reset password
+    engine_strings = get_db_connection_strings(
+        "python/database_config.yml", reset_pw=["ruimte_analyse222"]
+    )
+    print(engine_strings.ruimte_analyse222)
