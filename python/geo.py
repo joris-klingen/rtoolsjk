@@ -6,7 +6,7 @@ import requests
 
 
 def get_geo_json(
-    level: str, year: Union[int, Any], with_water: bool = False
+    level: str, year: Union[int, Any], with_water: bool = False, mra: bool = False
 ) -> dict[str, str]:
     """_summary_
 
@@ -17,9 +17,15 @@ def get_geo_json(
     Returns:
         dict[str, str]: geo json containg of the desired level and year
     """
-    base_url = "https://gitlab.com/os-amsterdam/datavisualisatie-onderzoek-en-statistiek/-/raw/main/geo/amsterdam/"
+    base_url = "https://gitlab.com/os-amsterdam/datavisualisatie-onderzoek-en-statistiek/-/raw/main/geo/"
 
-    if year <= 2020:
+    if mra:
+        level = f"{level}-mra"
+        base_url = f"{base_url}mra/"
+    else:
+        base_url = f"{base_url}amsterdam/"
+
+    if (year <= 2020) & ~mra:
         year = "2015-2020"
 
     if with_water:
@@ -27,8 +33,9 @@ def get_geo_json(
     else:
         url = f"{base_url}/{year}/{level}-{year}-zw-geo.json"
 
-    r = requests.get(url).json()
-    return r
+    print(url)
+    json = requests.get(url).json()
+    return json
 
 
 def extract_name_code_table(geo_json: dict[str, str]) -> dict[str, str]:
@@ -48,7 +55,7 @@ def extract_name_code_table(geo_json: dict[str, str]) -> dict[str, str]:
     return naam_code
 
 
-def get_geo_name_code(level: str, year: int) -> dict[str, str]:
+def get_geo_name_code(level: str, year: int, mra: bool = False) -> dict[str, str]:
     """_summary_
 
     Args:
@@ -64,8 +71,14 @@ def get_geo_name_code(level: str, year: int) -> dict[str, str]:
 
 
 if __name__ == "__main__":
-    json = get_geo_json(level="stadsdelen", year=2022)
-    print(json)
+    # print(get_geo_json("buurten", 2021, mra=False))
+    # print(get_geo_json("buurten", 2018, mra=False))
 
-    code_name = get_geo_name_code("stadsdelen", 2018)
-    print(code_name)
+    # print(get_geo_json("buurten", 2021, mra=True))
+    # print(get_geo_json("buurten", 2018, mra=True))
+
+    # print(get_geo_name_code("wijken", 2020, mra=False))
+    # print(get_geo_name_code("wijken", 2020, mra=True))
+
+
+# https://gitlab.com/os-amsterdam/datavisualisatie-onderzoek-en-statistiek/-/raw/main/geo/mra//2015-2020/buurten-mra-2015-2020-zw-geo.json
