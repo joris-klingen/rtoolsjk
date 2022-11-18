@@ -71,14 +71,15 @@ def get_geo_name_code(level: str, year: int, mra: bool = False) -> dict[str, str
 
 
 if __name__ == "__main__":
+    ...
     # print(get_geo_json("buurten", 2021, mra=False))
     # print(get_geo_json("buurten", 2018, mra=False))
 
     # print(get_geo_json("buurten", 2021, mra=True))
     # print(get_geo_json("buurten", 2018, mra=True))
 
-    # print(get_geo_name_code("wijken", 2020, mra=False))
-    # print(get_geo_name_code("wijken", 2020, mra=True))
+    print(get_geo_name_code("wijken", 2020, mra=False))
+    print(get_geo_name_code("wijken", 2020, mra=True))
 
 
 # https://gitlab.com/os-amsterdam/datavisualisatie-onderzoek-en-statistiek/-/raw/main/geo/mra//2015-2020/buurten-mra-2015-2020-zw-geo.json
