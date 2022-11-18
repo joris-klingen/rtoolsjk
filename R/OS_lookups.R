@@ -19,9 +19,18 @@ stadsdelen = c(E = 'West',
 
 
 
-get_geo_json <- function(level, year, with_water=FALSE){
-  base_url = "https://gitlab.com/os-amsterdam/datavisualisatie-onderzoek-en-statistiek/-/raw/main/geo/amsterdam/"
-  if (year <= 2020){
+get_geo_json <- function(level, year, with_water=FALSE, mra=FALSE){
+  base_url = "https://gitlab.com/os-amsterdam/datavisualisatie-onderzoek-en-statistiek/-/raw/main/geo/"
+  
+  if (mra) {
+    level = glue::glue("{level}-mra")
+    base_url = glue::glue("{base_url}mra/") 
+  } else {
+    base_url = glue::glue("{base_url}amsterdam/")
+  }
+  
+  if (year <= 2020 & !mra){
+    # The geo-jsons at the level of Amsterdam pre 2021 are grouped in one folder
     year = "2015-2020"
   }
     
@@ -30,15 +39,24 @@ get_geo_json <- function(level, year, with_water=FALSE){
   } else {
     url = glue::glue("{base_url}/{year}/{level}-{year}-zw-geo.json")
   }
-      
+
   json <- jsonlite::fromJSON(url)
   return(json)
 }
 
-extract_name_code_table <- function(level, year){
-  geo_json <- get_geo_json(level = level, year = year)
+extract_name_code_table <- function(level, year, mra=FALSE){
+  geo_json <- get_geo_json(level = level, year = year, mra = mra)
   
   df = geo_json$features$properties
   lookup <- setNames(as.character(df$naam), df$code)
   return(lookup)
 }
+
+# get_geo_json("buurten", 2021, mra=FALSE)
+# get_geo_json("buurten", 2018, mra=FALSE)
+# 
+# get_geo_json("buurten", 2021, mra=TRUE)
+# get_geo_json("buurten", 2018, mra=TRUE)
+# 
+# extract_name_code_table("wijken", 2020, mra=F)
+# extract_name_code_table("wijken", 2020, mra=T)
