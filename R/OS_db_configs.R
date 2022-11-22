@@ -3,13 +3,17 @@
 library(yaml)
 library(DBI)
 
-db_con_ar <- function(db_config = NULL){
+db_con_ar <- function(db_config = NULL, path = "H:/db_configs/analyse_ruimte.yml"){
   
-
+  
+  
+  
   if(in_adw()){
-    db_config <- yaml.load_file("H:/db_configs/analyse_ruimte.yml")$default
+    db_config <- yaml.load_file(path)$default
   } else {
     # to do: get dbconfig van windows credential store 
+    db_config <- yaml.load_file(path)$default
+    
   }
   
   con <- dbConnect(RPostgres::Postgres(),
@@ -24,16 +28,18 @@ db_con_ar <- function(db_config = NULL){
 
 
 
-db_con_ref <- function(db_config = NULL){
+db_con_ref <- function(db_config = NULL, path = "H:/db_configs/referentiedb.yml"){
   
   library(yaml)
   library(DBI)
   
   
   if(in_adw()){
-    db_config <- yaml.load_file("H:/db_configs/referentiedb.yml")$default
+    db_config <- yaml.load_file(path)$default
   } else {
     # to do: get dbconfig van windows credential store 
+    db_config <- yaml.load_file(path)$default
+    
   }
   
   
