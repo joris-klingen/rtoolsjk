@@ -16,3 +16,4 @@ source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main
 source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_ggtheme.R')
 
 
+source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_statistiek_hulpfuncties.R')
