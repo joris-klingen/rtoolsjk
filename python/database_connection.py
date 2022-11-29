@@ -10,7 +10,9 @@ import yaml
 def get_db_connection_strings(
     path: str, reset_pw: Optional[list[str]] = None
 ) -> DbStringCollection:
-    """_summary_
+    """Creates object containing all database connection strings based on yaml
+    file containg the database connection settings. Password for the specific
+    database will be prompted and stored in the keyring of the device
 
     Args:
         path (str): _description_
@@ -35,7 +37,10 @@ def get_db_connection_strings(
 
 
 def build_conn_string(user: str, pw: str, host: str, port: str, dbname: str) -> str:
-    """_summary_
+    """Builds the connection string for the database
+
+    @@TODO
+    Add possibility to use different database types
 
     Args:
         user (str): username
