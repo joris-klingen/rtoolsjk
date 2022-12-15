@@ -82,14 +82,15 @@ class DbStringCollection:
 
 
 if __name__ == "__main__":
+    ...
     # Examples
 
     # Get database connection settings from yaml
-    engine_strings = get_db_connection_strings("python/database_config.yml")
-    print(engine_strings.ruimte_analyse222)
+    # engine_strings = get_db_connection_strings("python/database_config.yml")
+    # print(engine_strings.ruimte_analyse222)
 
     # Get database connection settings from yaml and reset password
-    engine_strings = get_db_connection_strings(
-        "python/database_config.yml", reset_pw=["ruimte_analyse222"]
-    )
-    print(engine_strings.ruimte_analyse222)
+    # engine_strings = get_db_connection_strings(
+    #     "python/database_config.yml", reset_pw=["ruimte_analyse222"]
+    # )
+    # print(engine_strings.ruimte_analyse222)
