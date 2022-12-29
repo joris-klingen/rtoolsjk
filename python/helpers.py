@@ -5,7 +5,6 @@ from typing import Union, Optional, Any
 import functools
 import time
 import pandas as pd
-from pandas.api.types import CategoricalDtype
 
 
 def time_it(func):
