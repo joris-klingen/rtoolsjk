@@ -1,5 +1,11 @@
+from __future__ import annotations
+
+from typing import Union, Optional, Any
+
 import functools
 import time
+import pandas as pd
+from pandas.api.types import CategoricalDtype
 
 
 def time_it(func):
@@ -11,3 +17,24 @@ def time_it(func):
         return value
 
     return wrapper
+
+
+def os_cut(
+    x: Union[list[Union[int, float]], pd.Series],
+    bins: list,
+    start_label: str = "lager dan",
+    end_label: str = "en hoger",
+    add_edge: Optional[int] = None,
+    sep: str = " - ",
+) -> pd.Series:
+    # Add non_overlap to left edge/boundary
+    if not add_edge:
+        add_edge = 0
+
+    start_l = [f"{start_label} {bins[1]}"]
+    inbetween_labels = [
+        f"{bins[i] + add_edge}{sep}{bins[i+1]}" for i in range(1, len(bins) - 2)
+    ]
+    end_l = [f"{bins[-2]} {end_label}"]
+
+    return pd.cut(x, bins=bins, labels=start_l + inbetween_labels + end_l)  # type: ignore
