@@ -41,28 +41,28 @@ class SavToParquet:
             prs.read_sav, self.file, chunksize=self.chunksize
         )
 
-    def write_meta_to_json(self, meta: "prs.metadatacontainer") -> None:
+    def write_meta_to_json(self) -> None:
         json_path = self.path_out.replace(".parquet", "_meta.json")
 
         meta_dict = {}
-        for attr in dir(meta):
+        for attr in dir(self.meta):
             if not attr.startswith("__"):
-                meta_dict[attr] = getattr(meta, attr)
+                meta_dict[attr] = getattr(self.meta, attr)
 
         with open(json_path, "w") as file:
             json.dump(meta_dict, file)
 
-    def write_meta_to_pickle(self, meta: "prs.metadatacontainer") -> None:
+    def write_meta_to_pickle(self) -> None:
         pickle_path = self.path_out.replace(".parquet", "_meta.pickle")
 
         with open(pickle_path, "wb") as file:
-            pickle.dump(meta, file)
+            pickle.dump(self.meta, file)
 
     def write_to_parquet(self) -> None:
-        meta_df, meta = self.get_meta()
+        meta_df, self.meta = self.get_meta()
         schema = table = pa.Table.from_pandas(meta_df).schema
-        self.write_meta_to_json(meta)
-        self.write_meta_to_pickle(meta)
+        self.write_meta_to_json()
+        self.write_meta_to_pickle()
 
         print("Writing table")
         with pq.ParquetWriter(self.path_out, schema) as writer:
@@ -75,7 +75,7 @@ class SavToParquet:
         print("Done")
 
 
-def read_parquet_in_chunks(path: str) -> Iterator:
+def read_parquet_in_chunks(path: str) -> Iterator[pd.DataFrame]:
     parquet_file = pq.ParquetFile(path)
     for table in parquet_file.iter_batches():
         df = table.to_pandas()
