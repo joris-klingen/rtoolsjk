@@ -15,15 +15,14 @@ def download(url: str, dest_path: pathlib.Path):
                 f.write(chunk)
 
 
-def unzip(zip_store, dest_folder: pathlib.Path):
+def unzip(zip_store: pathlib.Path, dest_folder: pathlib.Path):
     with zipfile.ZipFile(zip_store) as zipfile_:
         for filename in zipfile_.namelist():
             zipfile_.extract(filename, path=dest_folder)
 
 
 class FileLocation:
-    git_url = "https://gitlab.com/os-amsterdam/"
-    language = "python"
+    GIT_PROVIDER = "https://gitlab.com/os-amsterdam"
 
     def __init__(
         self,
@@ -41,7 +40,7 @@ class FileLocation:
 
     @property
     def url(self):
-        return f"https://gitlab.com/os-amsterdam/{self.repo}/-/archive/main/{self.repo}-{self.branch}.zip"
+        return f"{self.GIT_PROVIDER}/{self.repo}/-/archive/main/{self.repo}-{self.branch}.zip"
 
     @property
     def zipfile(self):
@@ -79,8 +78,9 @@ def copy_repo(
 
     if fl.os_tools_folder.exists():
         shutil.rmtree(fl.os_tools_folder)
-
     shutil.move(fl.move_folder, fl.os_tools_folder)
+
+    # Remove downloaded zip file and unzipped folder
     fl.zipfile.unlink()
     shutil.rmtree(fl.unzipped_folder)
 
