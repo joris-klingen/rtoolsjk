@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import pickle
 from pathlib import Path
-from typing import TYPE_CHECKING, Iterator, Optional
+from typing import TYPE_CHECKING, Iterator, Optional, Any
 
 import pandas as pd
 import pyarrow as pa
@@ -27,19 +27,19 @@ class SavToParquet:
         self.verbose = verbose
         self.chunksize = 10_000_000 if not chunksize else chunksize
 
-    def get_meta(self) -> Iterator:
-        return prs.read_sav(self.file, row_limit=10)
-
     @property
     def path_out(self) -> str:
         p = str(Path(self.file)).replace(".sav", ".parquet")
         return str(p)
 
     @property
-    def chunks(self) -> Iterator:
+    def chunks(self) -> Iterator[tuple["prs.metadatacontainer", pd.DataFrame]]:
         return prs.read_file_in_chunks(
             prs.read_sav, self.file, chunksize=self.chunksize
         )
+
+    def get_meta(self) -> Iterator:
+        return prs.read_sav(self.file, row_limit=10)
 
     def write_meta_to_json(self) -> None:
         json_path = self.path_out.replace(".parquet", "_meta.json")
@@ -61,8 +61,6 @@ class SavToParquet:
     def write_to_parquet(self) -> None:
         meta_df, self.meta = self.get_meta()
         schema = table = pa.Table.from_pandas(meta_df).schema
-        self.write_meta_to_json()
-        self.write_meta_to_pickle()
 
         print("Writing table")
         with pq.ParquetWriter(self.path_out, schema) as writer:
@@ -72,6 +70,10 @@ class SavToParquet:
 
                 table = pa.Table.from_pandas(df)
                 writer.write_table(table)
+
+        print("Writing metadata")
+        self.write_meta_to_json()
+        self.write_meta_to_pickle()
         print("Done")
 
 
@@ -82,11 +84,11 @@ def read_parquet_in_chunks(path: str) -> Iterator[pd.DataFrame]:
         yield df
 
 
-def read_metadata_container(path: str) -> dict:
+def read_metadata_container(path: str) -> dict[str, Any]:
     with open(path, "rb") as file:
         return pickle.load(file)
 
 
-def read_meta_from_json(path: str) -> dict:
+def read_meta_from_json(path: str) -> dict[str, Any]:
     with open(path) as file:
         return json.load(file)
