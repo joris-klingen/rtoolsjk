@@ -25,15 +25,14 @@ class SavToParquet:
         self.file = file
         self.folder_out = folder_out
         self.verbose = verbose
-        self.chunksize = 10_000_000 if not chunksize else chunksize
+        self.chunksize = 5_000_000 if not chunksize else chunksize
 
     @property
     def path_out(self) -> str:
-        p = str(Path(self.file)).replace(".sav", ".parquet")
-        return str(p)
+        return str(Path(self.file)).replace(".sav", ".parquet")
 
     @property
-    def chunks(self) -> Iterator[tuple["prs.metadatacontainer", pd.DataFrame]]:
+    def chunks(self) -> Iterator[tuple["pyreadstat.metadata_container", pd.DataFrame]]:
         return prs.read_file_in_chunks(
             prs.read_sav, self.file, chunksize=self.chunksize
         )
@@ -77,9 +76,11 @@ class SavToParquet:
         print("Done")
 
 
-def read_parquet_in_chunks(path: str) -> Iterator[pd.DataFrame]:
+def read_parquet_in_chunks(
+    path: str, columns: Optional[list[str]] = None
+) -> Iterator[pd.DataFrame]:
     parquet_file = pq.ParquetFile(path)
-    for table in parquet_file.iter_batches():
+    for table in parquet_file.iter_batches(columns=columns):
         df = table.to_pandas()
         yield df
 
