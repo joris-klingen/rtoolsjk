@@ -26,6 +26,7 @@ get_pdok_locatie <- function(query,
                              fields = c('woonplaatsnaam', 'straatnaam', 'huisnummer', 'centroide_ll'),
                              rows = 1){
   
+  lreturns <- list()
   
   for(i in seq_along(query)){
     
