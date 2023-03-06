@@ -23,7 +23,7 @@ add_lon_lat <- function(response){
 
 
 get_pdok_locatie <- function(query,
-                             fields = c('woonplaatsnaam', 'straatnaam', 'huisnummer', 'centroide_ll'),
+                             fields = c('woonplaatsnaam', 'straatnaam', 'huisnummer', 'postcode','centroide_ll'),
                              rows = 1){
   
   lreturns <- list()
