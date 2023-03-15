@@ -16,6 +16,8 @@ theme_ois <- function(legend_position = "bottom"){
       panel.grid.minor = ggplot2::element_blank(),
       strip.background = ggplot2::element_blank(),
       panel.grid.major.x = element_blank(),
+      legend.title=element_blank(),
+      axis.ticks.y = element_blank(),
       axis.ticks.x = element_blank(),
       legend.position=legend_position,
       panel.border = ggplot2::element_rect(fill = "transparent", color = NA),
