@@ -12,7 +12,7 @@ theme_ois <- function(legend_position = "bottom"){
       plot.subtitle = ggplot2::element_text(family = font, size = 15),
       legend.text = ggplot2::element_text(family = font, size = 12),
       plot.title = ggplot2::element_text(family = font, lineheight = 1.2, size = 15),
-      legend.title = ggplot2::element_text(family = font, lineheight = 1.2, size = 13),
+      # legend.title = ggplot2::element_text(family = font, lineheight = 1.2, size = 13),
       panel.grid.minor = ggplot2::element_blank(),
       strip.background = ggplot2::element_blank(),
       panel.grid.major.x = element_blank(),
