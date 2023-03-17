@@ -19,3 +19,5 @@ source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main
 
 
 source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_geolocate.R')
+
+source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_get_geoms.R')
