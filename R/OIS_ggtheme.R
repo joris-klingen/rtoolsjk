@@ -1,4 +1,4 @@
-theme_os <- function(legend_position = "bottom"){
+theme_ois <- function(legend_position = "bottom"){
   
   grDevices::windowsFonts("Corbel" = grDevices::windowsFont("Corbel"))
   font <- "Corbel"
@@ -29,7 +29,7 @@ theme_os <- function(legend_position = "bottom"){
 
 
 
-theme_os_map <- function(legend_position = c(0, 0)){
+theme_ois_map <- function(legend_position = c(0, 0)){
   
   grDevices::windowsFonts("Corbel" = grDevices::windowsFont("Corbel"))
   font <- "Corbel"
