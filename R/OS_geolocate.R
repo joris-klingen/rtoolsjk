@@ -1,7 +1,6 @@
 library(httr)
 library(jsonlite)
 
-
 get_json_response <- function(base_url,
                               params){
   
@@ -59,3 +58,7 @@ get_pdok_locatie <- function(query,
   return(returns)
   
 }
+
+
+
+
