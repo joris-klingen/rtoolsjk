@@ -39,6 +39,16 @@ OS_chisq_table <- function(df, var_x, var_y, digits = 3){
 
 
 
+get_valid_responses <- function(data) {
+  
+  df_valid <- data %>% 
+    filter(rowSums(!is.na(.)) >= 1) 
+  
+  
+  return(df_valid)
+  
+}
+
 
 multiple_response_binair <- function(data, cols, counted_value) {
   
