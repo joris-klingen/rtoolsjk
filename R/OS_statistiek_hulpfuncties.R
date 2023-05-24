@@ -60,83 +60,91 @@ multiple_response_binair <- function(data, cols, counted_value) {
     filter(answer == {{ counted_value }})
   
   
-  
   # Voeg de labels toe aan de resultaten
   tabel <- bind_cols(tabel, labels)
   
+  
+  tabel <- tabel %>% 
+    os_order_labels(add_custom = c('geen zin', 'niemand weet het'))
+    
+    
+  # Sorteren van antwoorden op volgorde van grootte
+  single_labels <- c("anders, namelijk",
+                     "weet ik niet, geen antwoord",
+                     "weet ik niet",
+                     "weet niet",
+                     "geen antwoord",
+                     "weet niet, geen antwoord",
+                     "niet ingevuld",
+                     "weet niet / geen antwoord",
+                     "weet ik niet / geen antwoord",
+                     "nee, ",
+                     "met iemand anders, namelijk")
+  
+  tabel_multi <- tabel %>% 
+    filter(!labels %in% single_labels) %>% 
+    arrange(desc(percent))
+  
+  tabel_single <- tabel %>% 
+    filter(labels %in% single_labels)
+  
+  tabel <- tabel_multi %>% 
+    bind_rows(tabel_single)
+  
+  
+  
   return(tabel)
   
-}
 
-
-multiple_response_cat <- function(data, cols){
-
-    data <- data %>% select({{ cols }})
   
-    n_cols <- ncol(data)
-    
-    unique_answers <-  unique(data %>% select({{ cols }}) %>% pull)
-    
-    unique_answers <- unique_answers[!is.na(unique_answers)]
-    
-    
-    n_respondenten <- nrow(data)
-    
-    valid_respondenten <- data %>% 
-      is.na %>% 
-      `!` %>% 
-      rowSums >= 1 
-    
-    valid_respondenten <- sum(valid_respondenten)
-    
-    
-    na_respondenten <- n_respondenten - valid_respondenten
-    
-    n_valid_antwoorden <- data %>% 
-      is.na %>% 
-      `!` %>% 
-      sum
-    
-    n_antwoorden <- n_valid_antwoorden + na_respondenten
-    
-    
-    tabel <- data %>%
-      pivot_longer(cols = everything(), 
-                   names_to = 'question',
-                   values_to = 'answer') %>% 
-      filter(!is.na(answer)) %>% 
-      group_by(answer) %>% 
-      summarise(n = n(), 
-                percent = n()/n_respondenten, 
-                valid_percent = n()/valid_respondenten) 
-
-    tabel_anders <- tabel %>% 
-      filter(str_detect(tolower(answer), "^anders"))
-    
-    tabel_weet_niet <- tabel %>% 
-      filter(str_detect(tolower(answer), "^weet niet|^weet ik niet"))
-    
-    
-    
-    tabel <- tabel %>%
-      filter(!str_detect(tolower(answer), "^anders")) %>% 
-      filter(!str_detect(tolower(answer), "^weet niet|^weet ik niet")) %>% 
-      arrange(-valid_percent) %>% 
-      bind_rows(tabel_anders) %>% 
-      bind_rows(tabel_weet_niet) %>% 
-      bind_rows(
-        tibble(answer = as.character(NA),
-                           n = na_respondenten,
-                           percent = na_respondenten/n_respondenten,
-                           valid_percent = NA)
-      )
-    
-    
-    return(tabel)
-    
-    
+  
 }
 
+
+multiple_response_cat <- function(data, 
+                                  cols, 
+                                  end_cats = NULL){
+  
+  data <- data %>% select({{ cols }})
+  
+  n_resps_total <- nrow(data)
+  
+  n_valid_resps <- nrow(get_valid_responses(df_valid))
+  
+  table <- data %>%
+    pivot_longer(cols = everything(), 
+                 names_to = 'question',
+                 values_to = 'answer') %>% 
+    filter(!is.na(answer)) %>% 
+    group_by(answer) %>% 
+    summarise(n = n(), 
+              percent = n()/n_resps_total, 
+              valid_percent = n()/n_valid_resps) %>% 
+    mutate(answer = fct_reorder(answer, -valid_percent)) %>% 
+    arrange(answer)
+  
+  
+  if(!is.null(end_cats)) {
+    table <- table %>%
+      mutate(answer = fct_relevel(answer, end_cats, after = Inf)) %>% 
+      arrange(answer)
+  }
+  
+  
+  # add row for respondants that did not answer this question
+  n_resps_na <- n_resps_total - n_valid_resps
+  
+  table <- table %>%   
+    bind_rows(
+      tibble(answer = as.character(NA),
+             n = n_resps_na,
+             percent = n_resps_na/n_resps_total,
+             valid_percent = NA)
+    )
+  
+  return(table)
+  
+}
 
 
 
