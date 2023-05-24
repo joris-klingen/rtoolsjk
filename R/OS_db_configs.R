@@ -8,7 +8,7 @@ db_con_ar <- function(db_config = NULL, path = "H:/db_configs/analyse_ruimte.yml
   
   
   
-  if(in_adw()){
+  if(dir.exists('G:/OIS')){
     db_config <- yaml.load_file(path)$default
   } else {
     # to do: get dbconfig van windows credential store 
@@ -34,7 +34,7 @@ db_con_ref <- function(db_config = NULL, path = "H:/db_configs/referentiedb.yml"
   library(DBI)
   
   
-  if(in_adw()){
+  if(dir.exists('G:/OIS')){
     db_config <- yaml.load_file(path)$default
   } else {
     # to do: get dbconfig van windows credential store 
