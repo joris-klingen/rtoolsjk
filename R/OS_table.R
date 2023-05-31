@@ -75,11 +75,11 @@ os_table <- function(df,
   # default left align char cols
   if(left_align_char_cols){
     char_cols <- unname(which(sapply(df, function(x) is.character(x)|is.factor(x) )))
-    addStyle_dflt_grd(style = styles$l_align, rows = ex_top_r, cols = left_align_cols)
+    addStyle_dflt_grd(style = styles$l_align, rows = ex_top_r, cols = char_cols)
   }
   
-  if(!is.null(left_align_cols)){
-    addStyle_dflt_grd(style = styles$l_align, rows = ex_top_r, cols = left_align_cols)
+  if(!is.null(left_align_index)){
+    addStyle_dflt_grd(style = styles$l_align, rows = ex_top_r, cols = left_align_index)
   }
   
   
