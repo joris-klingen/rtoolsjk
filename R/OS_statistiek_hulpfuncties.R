@@ -2,39 +2,49 @@
 # df: dataframe/tibble met survey data
 # var_x, var_y: kolomnamen van variabelen
 # digits: aantal digits geprint in plot
+# excel_output: tabel zonder extra kolommen maken
 
-OS_chisq_table <- function(df, var_x, var_y, digits = 3){
+OS_chisq_table <- function(df, var_x, var_y, digits = 3, excel_output = F){
   
   perc_table <- df %>% 
     filter(!is.na(.data[[var_x]]) & !is.na(.data[[var_y]])) %>% 
     tabyl(.data[[var_x]], .data[[var_y]]) %>% 
-    adorn_percentages("col") %>%
-    adorn_pct_formatting(digits = digits) %>%
-    adorn_ns() %>%
-    as_tibble() %>%
-    mutate(stat = 'percentage')
+    adorn_percentages("col")
   
+  if(excel_output == T){
+    return(perc_table)
+  }
   
-  chi_list <-  chisq.test(df %>% pull(.data[[var_x]]),
-                          df %>% pull(.data[[var_y]]),
-                          correct = FALSE)
-  
-  cat('p-value for Chi sq test: ', chi_list$p.value,'\n')
-  
-  
-  res_table <- as.data.frame.matrix(round(chi_list$stdres, digits)) %>% 
-    as_tibble(., rownames = var_x) %>% 
-    mutate(across(everything(), as.character)) %>% 
-    mutate(stat = 'stdres')
-  
-  
-  chi_inspect_table <- perc_table %>% 
-    bind_rows(res_table) %>% 
-    arrange(.data[[var_x]]) %>% 
-    select(.data[[var_x]], last_col(), everything())
-  
-  
-  return(chi_inspect_table)
+  if(excel_output == F){
+    perc_table <- perc_table %>% 
+      adorn_pct_formatting(digits = digits) %>%
+      adorn_ns() %>%
+      as_tibble() %>%
+      mutate(stat = 'percentage')
+    
+    
+    chi_list <-  chisq.test(df %>% pull(.data[[var_x]]),
+                            df %>% pull(.data[[var_y]]),
+                            correct = FALSE)
+    
+    cat('p-value for Chi sq test: ', chi_list$p.value,'\n')
+    
+    
+    res_table <- as.data.frame.matrix(round(chi_list$stdres, digits)) %>% 
+      as_tibble(., rownames = var_x) %>% 
+      mutate(across(everything(), as.character)) %>% 
+      mutate(stat = 'stdres')
+    
+    
+    chi_inspect_table <- perc_table %>% 
+      bind_rows(res_table) %>% 
+      arrange(.data[[var_x]]) %>% 
+      select(.data[[var_x]], last_col(), everything())
+    
+    
+    return(chi_inspect_table)
+    
+  }
 }
 
 
