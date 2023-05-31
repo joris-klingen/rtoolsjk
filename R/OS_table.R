@@ -62,12 +62,12 @@ os_table <- function(df,
   
   if(!is.null(perc_cols_pattern)){
     left_cols_pat <- str_which(names(df), perc_cols_pattern) 
-    addStyle_dflt_grd(style = styles$perc, rows = ex_top_r, cols = add_perc_to_cols)
+    addStyle_dflt_grd(style = styles$perc, rows = ex_top_r, cols = left_cols_pat)
   }
   
   
   if(!is.null(perc_cols_index)){
-    addStyle_dflt_grd(style = styles$perc, rows = ex_top_r, cols = add_perc_to_cols)
+    addStyle_dflt_grd(style = styles$perc, rows = ex_top_r, cols = perc_cols_index)
   }
   
   
