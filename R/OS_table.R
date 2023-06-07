@@ -132,7 +132,7 @@ style_sheet <- function(wb, df, sheet_name, add_perc_to_cols, left_align_cols){
 }
 
 
-write_named_list_with_styling <- function(named_list, path){
+write_named_list_with_styling <- function(named_list, path, overwrite = T){
   wb <- createWorkbook()
   styles <- get_table_styles()
   
@@ -141,7 +141,7 @@ write_named_list_with_styling <- function(named_list, path){
     style_sheet(wb, df, name, NULL, NULL)
   }
   
-  saveWorkbook(wb, path)
+  saveWorkbook(wb, path, overwrite = overwrite)
 }
 
 
