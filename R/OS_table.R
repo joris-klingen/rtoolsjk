@@ -2,7 +2,7 @@
 # wordt beheerd door Joris (j.klingen@amsterdam.nl) en Daan (d.schmitz@amsterdam.nl)
 # vul gerust aan
 
-# Last update: 31-08-2022
+# Last update: 05-06-2022
 
 library(openxlsx)
 library(purrr)
