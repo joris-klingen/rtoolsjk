@@ -16,7 +16,7 @@ source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main
 source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_vacature_tools.R', local = os_tools)
 source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_categorize.R', local = os_tools)
 
-# source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_colors.R', local = os_tools)
+source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_colors.R', local = os_tools)
 
 
 # activate
