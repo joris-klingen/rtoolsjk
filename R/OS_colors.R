@@ -1,4 +1,5 @@
 library(tidyverse)
+# library(jsonlite)
 
 # Lijst met color palettes
 palettes_list <- list(
@@ -16,6 +17,9 @@ palettes_list <- list(
   
   `zonsondergang` = c("#004699", "#3f5aa2", "#7c84b2", "#a2bad3", "#71abdd", "#009dec", "#ffe600", "#ffbc00", "#ff9100")
 )
+
+# # work in progress, onderstaande gebruiken op basis van aantal
+# palettes_list <- read_json('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/references/OS_colors.json')
 
 
 # Functie om kleuren te interpoleren

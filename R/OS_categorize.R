@@ -17,7 +17,7 @@ os_cut <- function(x,
   
   midden <- c()
   
-  for(i in 2:(2 + n_labels - 2) ) {
+  for(i in 2:(n_labels - 1) ) {
     
     print(i)
     midden_add <- paste0(
