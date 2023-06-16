@@ -19,7 +19,6 @@ os_cut <- function(x,
   
   for(i in 2:(n_labels - 1) ) {
     
-    print(i)
     midden_add <- paste0(
       prefix, breaks[i], suffix, 
       sep,
@@ -43,8 +42,7 @@ os_cut <- function(x,
       'midden: ', midden, '\n', 
       'end: ', end, '\n')
   cat('\n')
-  print(labels_manual)
-  
+
   if(!is.null(end_label_overwrite)){
     labels_manual[n_labels] <- end_label_overwrite
   }
