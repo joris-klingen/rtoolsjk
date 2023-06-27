@@ -132,6 +132,22 @@ style_sheet <- function(wb, df, sheet_name, add_perc_to_cols, left_align_cols){
 }
 
 
+os_table_list <- function(named_list, path, overwrite = T){
+  wb <- createWorkbook()
+  styles <- get_table_styles()
+  
+  for (name in names(named_list)){
+    df <- named_list[[name]]
+    style_sheet(wb, df, name, NULL, NULL)
+  }
+  
+  saveWorkbook(wb, path, overwrite = overwrite)
+}
+
+
+
+
+# let op, deze is kopie van os_table_list voor backward comp, vervalt op termijn
 write_named_list_with_styling <- function(named_list, path, overwrite = T){
   wb <- createWorkbook()
   styles <- get_table_styles()
