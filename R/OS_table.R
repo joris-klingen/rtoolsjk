@@ -9,7 +9,11 @@ library(purrr)
 
 # Define styles
 
-get_table_styles <- function(){
+get_table_styles <- function(n_digits = 2){
+  
+  digit_format <- ifelse(n_digits == 0, '0', paste0('0.', paste(rep(0, n_digits), collapse = '')))
+  
+  
   styles <- list(
     "top_row" = createStyle(
       textDecoration = "bold",
@@ -26,7 +30,8 @@ get_table_styles <- function(){
     "font" = createStyle(fontSize = 9, fontName = "corbel"),
     "l_align" = createStyle(halign = "left"),
     "r_align" = createStyle(halign = "right"),
-    "perc" = createStyle(numFmt = "0.00%")
+    "perc" = createStyle(numFmt = paste0(digit_format, '%')), 
+    "digits" = createStyle(numFmt = digit_format)
   )
   return(styles)
 }
@@ -35,13 +40,15 @@ get_table_styles <- function(){
 os_table <- function(df, 
                      path, 
                      sheet_name = "Sheet1", 
+                     title_height = 14.4,
                      perc_cols_index = NULL,
                      perc_cols_pattern = NULL,
                      left_align_char_cols = TRUE,
-                     left_align_index = NULL){
+                     left_align_index = NULL, 
+                     round_digits = 2){
   
   wb <- createWorkbook()
-  styles <- get_table_styles()
+  styles <- get_table_styles(n_digits = round_digits)
   
   addWorksheet(wb, sheet_name, gridLines = TRUE)
   writeData(wb, sheet_name, df, withFilter = T)
@@ -58,8 +65,9 @@ os_table <- function(df,
   addStyle_dflt_grd(style = styles$font, rows = 1:(nrow(df)+1), cols = cols)
   addStyle_dflt_grd(style = styles$l_align, rows = 1, cols = cols)
   addStyle_dflt_grd(style = styles$r_align, rows = ex_top_r, cols = cols)
-  
-  
+  addStyle_dflt_grd(style = styles$digits, rows = ex_top_r, cols = cols)
+  setRowHeights(wb = wb, sheet = sheet_name, rows = 1, heights = title_height)
+ 
   if(!is.null(perc_cols_pattern)){
     left_cols_pat <- str_which(names(df), perc_cols_pattern) 
     addStyle_dflt_grd(style = styles$perc, rows = ex_top_r, cols = left_cols_pat)
@@ -70,7 +78,7 @@ os_table <- function(df,
     addStyle_dflt_grd(style = styles$perc, rows = ex_top_r, cols = perc_cols_index)
   }
   
-  
+
   
   # default left align char cols
   if(left_align_char_cols){
@@ -85,7 +93,7 @@ os_table <- function(df,
   
   # Set column width to 1.5 times the amount of chars
   setColWidths(wb, sheet_name, cols, widths = nchar(names(df)) + 4)
-  saveWorkbook(wb, path, overwrite=TRUE)
+  saveWorkbook(wb, path, overwrite = TRUE)
 }
 
 
