@@ -28,14 +28,22 @@ os_barchart <- function(data, x, y, labels=F, sort=F, fill_color="#004699"){
 }
 
 
-os_stacked_barchart <- function(data, x, y, color_col, colors, flip = F){
+os_stacked_barchart <- function(
+    data, 
+    x, 
+    y, 
+    color_col, 
+    colors, 
+    invert_legend = F, 
+    flip = F
+    ){
   text_color <- get_txt_color_based_on_bg(colors)
   
   fig <- ggplot(
     data, 
     aes(x = {{ x }}, y = {{ y }}, fill = {{ color_col }})
   ) +
-    geom_col() +
+    geom_col(width=0.8) +
     geom_text(aes(
       label = scales::percent({{ y }}, 2),
       color={{ color_col }}),
@@ -45,8 +53,13 @@ os_stacked_barchart <- function(data, x, y, color_col, colors, flip = F){
     scale_fill_manual(values=colors) +
     scale_color_manual(values=text_color) +
     scale_y_continuous(labels = scales::percent) +
-    guides(fill = guide_legend(reverse = TRUE)) +
-    theme_os(orientation=ifelse(flip == T, "horizontal", "vertical"))
+    guides(fill = guide_legend(reverse = F))
+    
+    if (invert_legend){
+      fig <- fig + guides(fill = guide_legend(reverse = TRUE))
+    }
+    
+    fig <- fig + theme_os(orientation=ifelse(flip == T, "horizontal", "vertical"), drop_axis_titles = T)
   
   if (flip){
     fig <- fig + coord_flip()
