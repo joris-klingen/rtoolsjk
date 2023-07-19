@@ -100,7 +100,7 @@ os_sheet <- function(wb,
   
 }
 
-get_df_as_list <- function(df_or_list){
+get_df_as_list <- function(df_or_list, sheet_name){
   
   if(is.data.frame(df_or_list)){
     named_list <- list()
@@ -128,7 +128,7 @@ os_table <- function(df_or_list,
   
   wb <- createWorkbook()
                     
-  named_list <- get_df_as_list(df_or_list)
+  named_list <- get_df_as_list(df_or_list, sheet_name = sheet_name)
 
   for (name in names(named_list)){
     df <- named_list[[name]]
