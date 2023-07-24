@@ -1,4 +1,4 @@
-theme_os <- function(orientation="vertical", legend_position = "bottom", drop_axis_titles = F ){
+theme_os <- function(orientation="vertical", legend_position = "bottom", drop_axis_titles = F){
   
   grDevices::windowsFonts("Corbel" = grDevices::windowsFont("Corbel"))
   font <- "Corbel"
@@ -19,7 +19,7 @@ theme_os <- function(orientation="vertical", legend_position = "bottom", drop_ax
       legend.position=legend_position,
       panel.border = ggplot2::element_rect(fill = "transparent", color = NA),
       strip.text = ggplot2::element_text(color = "black", family = font, face = "bold", size = 15)
-    ) 
+    )
   
   if (orientation %in% c("vertical", "v")){
     theme <- theme + ggplot2::theme(panel.grid.major.x = element_blank())
@@ -36,7 +36,6 @@ theme_os <- function(orientation="vertical", legend_position = "bottom", drop_ax
   
   return(theme)
 }
-
 
 
 theme_os_map <- function(legend_position = c(0, 0)){
