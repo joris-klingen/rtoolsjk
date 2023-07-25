@@ -20,8 +20,7 @@ class BaseStyle:
                 print("Failed grabbing basestyle from the interwebs")
                 # Add option to manually provide json file
         else:
-            with open(style_path) as file:
-                res = json.load(file)
+            res = json.loads()
 
         for k, v in res.items():
             setattr(self, k, v)
