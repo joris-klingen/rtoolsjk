@@ -57,7 +57,7 @@ os_base_bar <- function(
   ) +
     geom_col(width = 0.8, position = position) +
     scale_fill_manual(values=colors) +
-    scale_color_manual(values=text_color) +
+    scale_color_manual(values = text_color) +
     guides(fill = guide_legend(reverse = T)) +
     geom_hline(yintercept = 0) +
     theme_os(
@@ -79,7 +79,7 @@ os_stacked_bar_abs <- function(
     colors, 
     invert_legend = F, 
     flip = F,
-    hide_label_value = 0
+    minimum_label_value = 0
 ){
   fig <- os_base_bar(
     data=data, 
@@ -93,8 +93,8 @@ os_stacked_bar_abs <- function(
   )
   
   label <- data %>% pull({{ y }})
-  if (hide_label_value > 0){
-    label <- ifelse(label < hide_label_value, "", format_abs(round(label, 0)))
+  if (minimum_label_value > 0){
+    label <- ifelse(label < minimum_label_value, "", format_abs(round(label, 0)))
   }
   
   fig <- fig + 
@@ -123,7 +123,7 @@ os_stacked_bar_perc <- function(
     colors, 
     invert_legend = F, 
     flip = F,
-    hide_label_value = 0
+    minimum_label_value = 0
 ){
   fig <- os_base_bar(
     data=data, 
@@ -137,13 +137,15 @@ os_stacked_bar_perc <- function(
   )
   
   label <- data %>% pull({{ y }})
-  if (hide_label_value > 0){
-    label <- ifelse(label < hide_label_value, str_trim(""), str_trim(label))
+  if (minimum_label_value > 0){
+    label <- ifelse(label < minimum_label_value/100, 
+                    str_trim(""), 
+                    str_trim(round(label * 100, 0)))
   }
   
   fig <- fig +
     geom_text(aes(
-      label = round(label * 100, 0),
+      label = label,
       color={{ color_col }}),
       position = position_stack(0.5),
       show.legend=FALSE,
@@ -221,16 +223,24 @@ os_grouped_bar_abs <- function(
   
   # Voor het onderstaande blok een betere oplossing zoeken om herhaling te voorkomen
   label <- data %>% pull({{ y }}) %>% round(., 0)
+  
+  labels_outside = str_trim(
+    ifelse(label > label_outside_value, "", str_trim(label)))
+  print(labels_outside)
+  
   if (label_outside_value > 0 & flip == T){
     hjust <- ifelse(label < label_outside_value, -0.2, 1.2)
     txt_func <- geom_text(aes(
       label = str_trim(format(label, big.mark = ".", decimal.mark = ",", scientific = FALSE)),
-      color = {{ color_col }}),
+      color = {{ color_col }} # just to tell ggplot that we want different text colors per case 
+      ),
       position = position_dodge2(0.8),
       hjust = hjust,
       show.legend = FALSE,
       fontface = "bold"
-    )
+    ) 
+    text_outside <- geom_text(aes(label = format(labels_outside, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+                ), color="black", position = position_dodge2(0.8), fontface="bold", hjust=hjust)
   } else if(label_outside_value > 0 & flip == F) {
     vjust <- ifelse(label < label_outside_value, -0.5, 1.5)
     txt_func <- geom_text(aes(
@@ -251,8 +261,13 @@ os_grouped_bar_abs <- function(
     )
   }
   
+
+  
+  
+  
   fig <- fig +
     txt_func +
+    text_outside + 
     scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
   
   if (flip){
