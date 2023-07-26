@@ -21,7 +21,11 @@ source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main
 
 
 # activate
-attach(os_tools)
+
+
+if(!exists("os_tools")) {
+  attach(os_tools)
+}
 
 os_show_functions <- function(env = os_tools) {
   print(names(env))
