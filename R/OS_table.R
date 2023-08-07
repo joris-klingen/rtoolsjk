@@ -44,7 +44,8 @@ os_sheet <- function(wb,
                      perc_cols_pattern = NULL,
                      left_align_char_cols = TRUE,
                      left_align_index = NULL, 
-                     round_digits = 2){
+                     round_digits = 2,
+                     bottom_row = FALSE){
   
   styles <- get_table_styles(n_digits = round_digits)
   
@@ -52,7 +53,8 @@ os_sheet <- function(wb,
   writeData(wb, sheet_name, df, withFilter = T)
   
   cols = 1:ncol(df)
-  ex_top_r = 2:(nrow(df)+1)
+  ex_top_r = 2:(nrow(df) + 1)
+  bottom_row_nr = nrow(df) + 1
   
   # Fix some parameters to prevent repetition of these "default" parameters
   addStyle_dflt <- partial(addStyle, wb = wb, sheet = sheet_name, stack = TRUE)
@@ -94,6 +96,11 @@ os_sheet <- function(wb,
     addStyle_dflt_grd(style = styles$l_align, rows = ex_top_r, cols = left_align_index)
   }
   
+  if(bottom_row == T) {
+    addStyle_dflt(style = styles$bottom_row, rows = bottom_row_nr, cols = cols)
+    
+  }
+  
   
   # Set column width to 1.5 times the amount of chars
   setColWidths(wb, sheet_name, cols, widths = nchar(names(df)) + 4)
@@ -124,7 +131,8 @@ os_table <- function(df_or_list,
                      left_align_char_cols = TRUE,
                      left_align_index = NULL, 
                      round_digits = 2,
-                     overwrite = T) {
+                     overwrite = T,
+                     bottom_row = F) {
   
   wb <- createWorkbook()
                     
@@ -141,7 +149,8 @@ os_table <- function(df_or_list,
              perc_cols_pattern = perc_cols_pattern,
              left_align_char_cols = left_align_char_cols,
              left_align_index = left_align_index,
-             round_digits = round_digits
+             round_digits = round_digits,
+             bottom_row = bottom_row
              )
     
   }
