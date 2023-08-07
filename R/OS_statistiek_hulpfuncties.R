@@ -85,12 +85,12 @@ multiple_response_binair <- function(data, cols, counted_value) {
   
 
     
-    
   # Sorteren van antwoorden op volgorde van grootte
   single_labels <- c("anders, namelijk",
                      "weet ik niet, geen antwoord",
                      "weet ik niet",
                      "weet niet",
+                     "iets anders, namelijk",
                      "geen antwoord",
                      "weet niet, geen antwoord",
                      "niet ingevuld",
