@@ -83,9 +83,7 @@ multiple_response_binair <- function(data, cols, counted_value) {
   # Voeg de labels toe aan de resultaten
   tabel <- bind_cols(tabel, labels)
   
-  
-  tabel <- tabel %>% 
-    os_order_labels(add_custom = c('geen zin', 'niemand weet het'))
+
     
     
   # Sorteren van antwoorden op volgorde van grootte
