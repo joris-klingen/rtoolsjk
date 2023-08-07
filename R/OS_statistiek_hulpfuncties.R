@@ -95,7 +95,9 @@ multiple_response_binair <- function(data, cols, counted_value) {
                      "weet niet, geen antwoord",
                      "niet ingevuld",
                      "weet niet / geen antwoord",
+                     "weet niet/geen antwoord",
                      "weet ik niet / geen antwoord",
+                     "weet ik niet/geen antwoord",
                      "nee, ",
                      "met iemand anders, namelijk")
   
