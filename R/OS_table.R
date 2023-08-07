@@ -9,7 +9,7 @@ library(purrr)
 
 # Define styles
 
-get_table_styles <- function(n_digits = 2){
+get_table_styles <- function(n_digits = 2, font_custom = "corbel"){
   
   digit_format <- ifelse(n_digits == 0, '0', paste0('0.', paste(rep(0, n_digits), collapse = '')))
   
@@ -21,17 +21,20 @@ get_table_styles <- function(n_digits = 2){
     ),
     "bottom_row" = createStyle(
       border = "Bottom",
-      borderStyle = "thin",
+      borderStyle = "medium",
       borderColour="#00a0e6"
     ),
     "total_row" = createStyle(
       textDecoration = "bold",
       border = "Bottom",
-      borderStyle = "thin",
+      borderStyle = "medium",
       fgFill = "#B1D9F5",
       borderColour="#00a0e6"
     ),
-    "font" = createStyle(fontSize = 9, fontName = "corbel"),
+    "total_column" = createStyle(
+      fgFill = "#B1D9F5",
+    ),
+    "font" = createStyle(fontSize = 9, fontName = font_custom),
     "l_align" = createStyle(halign = "left"),
     "r_align" = createStyle(halign = "right"),
     "perc" = createStyle(numFmt = paste0(digit_format, '%')), 
@@ -50,14 +53,18 @@ os_sheet <- function(wb,
                      left_align_char_cols = TRUE,
                      left_align_index = NULL, 
                      round_digits = 2,
-                     total_row = FALSE){
+                     total_row = FALSE,
+                     total_column = FALSE,
+                     font_custom = 'corbel'){
   
-  styles <- get_table_styles(n_digits = round_digits)
+  styles <- get_table_styles(n_digits = round_digits, 
+                             font_custom = font_custom)
   
   addWorksheet(wb, sheet_name, gridLines = TRUE)
   writeData(wb, sheet_name, df, withFilter = T)
   
   cols = 1:ncol(df)
+  last_col = ncol(df)
   ex_top_r = 2:(nrow(df) + 1)
   bottom_row_nr = nrow(df) + 1
   
@@ -100,8 +107,14 @@ os_sheet <- function(wb,
   if(!is.null(left_align_index)){
     addStyle_dflt_grd(style = styles$l_align, rows = ex_top_r, cols = left_align_index)
   }
+
   
-  # add blue line at bottom
+  if(total_column == T) {
+    addStyle_dflt(style = styles$total_column, rows = ex_top_r, cols = last_col)
+  }
+  
+    
+  # add blue line at bottom always
   addStyle_dflt(style = styles$bottom_row, rows = bottom_row_nr, cols = cols)
   
   
@@ -141,7 +154,9 @@ os_table <- function(df_or_list,
                      left_align_index = NULL, 
                      round_digits = 2,
                      overwrite = T,
-                     total_row = F) {
+                     total_row = F,
+                     total_column = FALSE,
+                     font_custom = 'corbel') {
   
   wb <- createWorkbook()
                     
@@ -159,7 +174,9 @@ os_table <- function(df_or_list,
              left_align_char_cols = left_align_char_cols,
              left_align_index = left_align_index,
              round_digits = round_digits,
-             total_row = total_row
+             total_row = total_row,
+             total_column = total_column,
+             font_custom = font_custom
              )
     
   }
