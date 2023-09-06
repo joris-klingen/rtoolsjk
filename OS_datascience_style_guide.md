@@ -1,6 +1,7 @@
 
 ## mappenstructuur
 
+```
 ├── data
 │   ├── external       <- Data from third party sources.
 │   ├── interim        <- Intermediate data that has been transformed.
@@ -23,3 +24,4 @@
 │                         generated with `pip freeze > requirements.txt`
 │
 ├── src                <- Source code for use in this project.
+```
