@@ -29,3 +29,15 @@ Laad de relevante dataframe(s). In de projectmap staat een .Rproj file waarvanui
 read_spss(PATH)
 ```
 Deel het script overzichtelijk in. Als het lang is kun je overwegen een outline bovenaan bij 'doel van het script' te zetten.
+
+### Algemeen
+Het is aanbevolen om één naming convention aan te houden binnen een script, bijvoorbeeld: met_streepjes, MetHoofdLetters, of met.punten.tussen.de.woorden. 
+
+Als je een functie schrijft, geef dan een korte uitleg van de functie, input en output in een comment:
+```
+mooie_functie <- function(input, optioneel = TRUE){
+    # uitleg wat de functie doet. 
+    # input                 type, uitleg
+    # optioneel             type, uitleg 
+}
+```
