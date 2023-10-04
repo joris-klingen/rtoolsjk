@@ -157,7 +157,26 @@ os_table <- function(df_or_list,
                      total_row = F,
                      total_column = FALSE,
                      font_custom = 'corbel') {
-  
+
+  # Converteert data naar excelbestand met tabellen in O&S-huisstijl. Bij list worden meerdere tabbladen aangemaakt...
+  # ...Gebruikt os_sheet() voor opmaken van sheets. 
+  #
+  # df_of_list            : list(names = dataframes) or df met data. Names in list worden sheetnamen in excel
+  # path                  : str, bestandspad van output
+  # sheet_name            : str, sheetname bij df als input
+  # title_height          : num, hoogte van titelregel in tabel in pt
+  # perc_cols_pattern     : str, regex patroon om aan te geven welke kolommen percentages zijn bijv 'aandeel_'
+  # perc_cols_index       : num vector, kolomindices van percentagekolommen bijv c(3, 4, 7)
+  # left_align_char_cols  : bool, geeft aan of alle character kolommen links uitgelijnd moeten worden
+  # left_align_index      : num vector, kolomindices van welke kolommen links uitgelijnd moeten worden
+  # round_digits          : int, aantal digits in afronding excel, let op alleen opmaak, data blijft behouden
+  # overwrite             : bool, bestand overschrijven
+  # total_row             : bool, moet laatste rij opmaak van een totaalrij krijgen?
+  # total_column          : bool, moet laatste kolom opmaak van een totaalrij krijgen? 
+  # font_custom           : str, font kiezen, default 'corbel'
+
+
+                  
   wb <- createWorkbook()
                     
   named_list <- get_df_as_list(df_or_list, sheet_name = sheet_name)
