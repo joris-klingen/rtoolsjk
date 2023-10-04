@@ -9,14 +9,18 @@ os_cut <- function(x,
                    start_label_overwrite = NULL,
                    end_label_overwrite = NULL){
 
-  # 
+  # Converteert gegeven continue variabele naar een categorische variabele met labels. Output: (ordered) factor met labeled levels
   #
-  # 
-  #
-  #
-  #
-  #
-  #
+  # x                     : vector van num of int, gegeven continue variabele.
+  # breaks                : vector van num, breekpunten: plekken waar de continue schaal wordt opgeknipt, incl min en max
+  # start_label           : str, label vóór het getal in de eerste categorie, default 'lager dan '
+  # end_label             : str, label na het getal in de laatste categorie, default ' en hoger'
+  # sep                   : str, label tussen de getallen in de overige categorieën, default ' - '
+  # prefix                : str, prefix voor elk getal in de categorielabels, bijv. '€', default ''
+  # suffix                : str, suffix voor elk getal in de categorielabels, bijv. '%', default ''
+  # ordered               : bool, geef aan of output factor ordered moet zijn, default T
+  # start_label_overwrite : str, geef de eerste categorie een andere naam, default NULL
+  # end_label_overwrite   : str, geef de laatste categorie een andere naam, default NULL
   
   n_labels <- length(breaks) - 1
   
