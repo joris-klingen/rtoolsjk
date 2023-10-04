@@ -1,5 +1,5 @@
 os_cut <- function(x, 
-                   breaks = NULL, 
+                   breaks = NULL, # numerieke vector bijv c(0, 20, 40, 100)
                    start_label = 'lager dan ',
                    end_label = ' en hoger',
                    sep = ' - ',
@@ -8,6 +8,15 @@ os_cut <- function(x,
                    ordered = T,
                    start_label_overwrite = NULL,
                    end_label_overwrite = NULL){
+
+  # 
+  #
+  # 
+  #
+  #
+  #
+  #
+  #
   
   n_labels <- length(breaks) - 1
   
