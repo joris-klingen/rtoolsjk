@@ -21,7 +21,7 @@ Onderstaande structuur geeft richtlijn voor de mappen in een onderzoeksproject.
 │
 ├── requirements.txt   <- voor projecten in python
 │
-├── project.Rproj   <- voor projecten in python
+├── project.Rproj      <- voor projecten in R
 │
 
 
