@@ -3,9 +3,10 @@
 library(yaml)
 library(DBI)
 
-db_con_ar <- function(db_config = NULL, path = "H:/db_configs/analyse_ruimte.yml"){
-  
-  
+
+db_con_ar <- function(db_config = NULL, 
+                      path = "H:/db_configs/analyse_ruimte.yml",
+                      from_env = FALSE){
   
   
   if(dir.exists('G:/OIS')){
@@ -13,6 +14,19 @@ db_con_ar <- function(db_config = NULL, path = "H:/db_configs/analyse_ruimte.yml
   } else {
     # to do: get dbconfig van windows credential store 
     db_config <- yaml.load_file(path)$default
+    
+  }
+  
+  if(from_env){
+    dotenv::load_dot_env(file = '.env')
+    
+    db_config <- list()
+    
+    db_config$host <- Sys.getenv()[['REF_DB_HOST']]
+    db_config$dbname <- Sys.getenv()[['REF_DB_NAME']]
+    db_config$user <- Sys.getenv()[['REF_DB_USER']]
+    db_config$password <- Sys.getenv()[['REF_DB_PASSWORD']]
+    db_config$port <- Sys.getenv()[['REF_DB_PORT']]
     
   }
   
