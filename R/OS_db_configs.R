@@ -11,10 +11,6 @@ db_con_ar <- function(db_config = NULL,
   
   if(dir.exists('G:/OIS')){
     db_config <- yaml.load_file(path)$default
-  } else {
-    # to do: get dbconfig van windows credential store 
-    db_config <- yaml.load_file(path)$default
-    
   }
   
   if(from_env){
@@ -27,6 +23,11 @@ db_con_ar <- function(db_config = NULL,
     db_config$user <- Sys.getenv()[['REF_DB_USER']]
     db_config$password <- Sys.getenv()[['REF_DB_PASSWORD']]
     db_config$port <- Sys.getenv()[['REF_DB_PORT']]
+    
+  } else {
+    
+    # to do: get dbconfig van windows credential store 
+    db_config <- yaml.load_file(path)$default
     
   }
   
@@ -47,11 +48,7 @@ db_con_basisstat <- function(db_config = NULL,
 
   if(dir.exists('G:/OIS')){
     db_config <- yaml.load_file(path)$default
-  } else {
-    # to do: get dbconfig van windows credential store 
-    db_config <- yaml.load_file(path)$default
-    
-  }
+  } 
   
   if(from_env){
     dotenv::load_dot_env(file = '.env')
@@ -64,8 +61,12 @@ db_con_basisstat <- function(db_config = NULL,
     db_config$password <- Sys.getenv()[['BSK_DB_PASSWORD']]
     db_config$port <- Sys.getenv()[['BSK_DB_PORT']]
     
+  } else {
+    
+    # to do: get dbconfig van windows credential store 
+    db_config <- yaml.load_file(path)$default
+    
   }
-  
   
   
   con <- dbConnect(RPostgres::Postgres(),
@@ -90,11 +91,7 @@ db_con_ref <- function(db_config = NULL,
   
   if(dir.exists('G:/OIS')){
     db_config <- yaml.load_file(path)$default
-  } else {
-    # to do: get dbconfig van windows credential store 
-    db_config <- yaml.load_file(path)$default
-    
-  }
+  } 
   
   if(from_env){
     dotenv::load_dot_env(file = '.env')
@@ -106,6 +103,11 @@ db_con_ref <- function(db_config = NULL,
     db_config$user <- Sys.getenv()[['AR_DB_USER']]
     db_config$password <- Sys.getenv()[['AR_DB_PASSWORD']]
     db_config$port <- Sys.getenv()[['AR_DB_PORT']]
+    
+  } else {
+    
+    # to do: get dbconfig van windows credential store 
+    db_config <- yaml.load_file(path)$default
     
   }
   
