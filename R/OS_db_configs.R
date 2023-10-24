@@ -18,11 +18,11 @@ db_con_ar <- function(db_config = NULL,
     
     db_config <- list()
     
-    db_config$host <- Sys.getenv()[['REF_DB_HOST']]
-    db_config$dbname <- Sys.getenv()[['REF_DB_NAME']]
-    db_config$user <- Sys.getenv()[['REF_DB_USER']]
-    db_config$password <- Sys.getenv()[['REF_DB_PASSWORD']]
-    db_config$port <- Sys.getenv()[['REF_DB_PORT']]
+    db_config$host <- Sys.getenv()[['AR_DB_HOST']]
+    db_config$dbname <- Sys.getenv()[['AR_DB_NAME']]
+    db_config$user <- Sys.getenv()[['AR_DB_USER']]
+    db_config$password <- Sys.getenv()[['AR_DB_PASSWORD']]
+    db_config$port <- Sys.getenv()[['AR_DB_PORT']]
     
   } else {
     
@@ -98,11 +98,12 @@ db_con_ref <- function(db_config = NULL,
     
     db_config <- list()
     
-    db_config$host <- Sys.getenv()[['AR_DB_HOST']]
-    db_config$dbname <- Sys.getenv()[['AR_DB_NAME']]
-    db_config$user <- Sys.getenv()[['AR_DB_USER']]
-    db_config$password <- Sys.getenv()[['AR_DB_PASSWORD']]
-    db_config$port <- Sys.getenv()[['AR_DB_PORT']]
+    db_config$host <- Sys.getenv()[['REF_DB_HOST']]
+    db_config$dbname <- Sys.getenv()[['REF_DB_NAME']]
+    db_config$user <- Sys.getenv()[['REF_DB_USER']]
+    db_config$password <- Sys.getenv()[['REF_DB_PASSWORD']]
+    db_config$port <- Sys.getenv()[['REF_DB_PORT']]
+    
     
   } else {
     
