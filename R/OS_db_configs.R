@@ -124,3 +124,11 @@ db_con_ref <- function(db_config = NULL,
   return(con)
   
 }
+
+
+get_azure_access_token <- function(){
+  az_output  <- system("az account get-access-token --resource-type oss-rdbms", intern = T)
+  json <- jsonlite::fromJSON(paste(az_output, collapse = ""))
+  
+  return(json$accessToken)
+}
