@@ -3,11 +3,29 @@
 library(yaml)
 library(DBI)
 
+db_con_os <- function(db_config = NULL, 
+                      path = "H:/db_configs/db_configs.yml",
+                      db_name = 'refdb_cloud'){
+  
+  if(dir.exists('G:/OIS')){
+    db_config <- yaml.load_file(path)[[db_name]]
+  }
+
+  con <- dbConnect(RPostgres::Postgres(),
+                   host = db_config$host,
+                   dbname = db_config$dbname,
+                   user = db_config$user,
+                   password = db_config$password,
+                   port = db_config$port,
+                   bigint="integer")
+  
+}
+
 
 db_con_ar <- function(db_config = NULL, 
                       path = "H:/db_configs/analyse_ruimte.yml",
                       from_env = FALSE){
-  
+
   
   if(dir.exists('G:/OIS')){
     db_config <- yaml.load_file(path)$default
