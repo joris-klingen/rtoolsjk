@@ -3,14 +3,55 @@
 library(yaml)
 library(DBI)
 
+get_azure_access_token <- function(){
+  az_output  <- tryCatch({
+    system("az account get-access-token --resource-type oss-rdbms", intern = T)
+    
+  },
+  error=function(e){
+    message("error")
+  },
+  warning=function(w){
+    system("az login")
+    az_output <- system("az account get-access-token --resource-type oss-rdbms", intern = T)
+    return(az_output)
+  }
+  )
+  
+  json <- jsonlite::fromJSON(paste(az_output, collapse = ""))
+  return(json$accessToken)
+}
+
+
 os_db_con <- function(db_config = NULL, 
                       path = "H:/db_configs/db_configs.yml",
                       db_name = 'refdb_cloud'){
-  
-  if(dir.exists('G:/OIS')){
-    db_config <- yaml.load_file(path)[[db_name]]
-  }
 
+  db_config <- yaml.load_file(path)[[db_name]]
+    
+  if(db_config$password == 'access_token'){
+    
+    if(dir.exists('G:/OIS')){
+      
+      db_config$password <- rstudioapi::showPrompt(
+        title = 'azure_access_token', 
+        message = 'provide your azure access token'
+        )
+      
+    } else {
+      
+      db_config$password <- get_azure_access_token()
+      
+    }
+    
+    
+  }
+  
+
+
+  
+  
+  
   con <- dbConnect(RPostgres::Postgres(),
                    host = db_config$host,
                    dbname = db_config$dbname,
