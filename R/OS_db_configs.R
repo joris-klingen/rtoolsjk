@@ -3,7 +3,7 @@
 library(yaml)
 library(DBI)
 
-db_con_os <- function(db_config = NULL, 
+os_db_con <- function(db_config = NULL, 
                       path = "H:/db_configs/db_configs.yml",
                       db_name = 'refdb_cloud'){
   
