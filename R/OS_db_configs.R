@@ -3,6 +3,8 @@
 library(yaml)
 library(DBI)
 
+
+
 get_azure_access_token <- function(){
   az_output  <- tryCatch({
     system("az account get-access-token --resource-type oss-rdbms", intern = T)
@@ -33,6 +35,10 @@ os_db_con <- function(db_config = NULL,
     
     if(dir.exists('G:/OIS')){
       
+      # to do, get token from H:/ ...  token.txt
+      # overwrite after prompt when expired
+      
+      
       db_config$password <- rstudioapi::showPrompt(
         title = 'azure_access_token', 
         message = 'provide your azure access token'
@@ -44,12 +50,7 @@ os_db_con <- function(db_config = NULL,
       
     }
     
-    
   }
-  
-
-
-  
   
   
   con <- dbConnect(RPostgres::Postgres(),
@@ -185,9 +186,3 @@ db_con_ref <- function(db_config = NULL,
 }
 
 
-get_azure_access_token <- function(){
-  az_output  <- system("az account get-access-token --resource-type oss-rdbms", intern = T)
-  json <- jsonlite::fromJSON(paste(az_output, collapse = ""))
-  
-  return(json$accessToken)
-}
