@@ -6,7 +6,7 @@ os_get_geom <- function(gebieden = 'wijken',
   
   
   geom <- st_read(
-    paste('https://gitlab.com/os-amsterdam/datavisualisatie-onderzoek-en-statistiek/-/raw/develop/geo/amsterdam',
+    paste('https://gitlab.com/os-amsterdam/datavisualisatie-onderzoek-en-statistiek/-/raw/develop/public/geo/amsterdam',
           peiljaar,
           paste0(gebieden,'-', peiljaar,'-zw-geo.json'), 
           sep = '/'))
