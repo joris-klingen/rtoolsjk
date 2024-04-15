@@ -12,7 +12,7 @@ if(!exists("os_tools")) {
   source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_ggtheme.R', local = os_tools)
   
   # oude versie
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OIS_ggtheme.R', local = os_tools)
+  # source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OIS_ggtheme.R', local = os_tools)
   source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_statistiek_hulpfuncties.R', local = os_tools)
   source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_geolocate.R', local = os_tools)
   source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_get_geoms.R', local = os_tools)
