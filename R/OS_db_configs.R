@@ -27,13 +27,14 @@ get_azure_access_token <- function(){
 
 os_db_con <- function(db_config = NULL, 
                       path = "H:/db_configs/db_configs.yml",
-                      db_name = 'refdb_cloud'){
+                      db_name = 'refdb_cloud',
+                      hard_token = FALSE){
 
   db_config <- yaml.load_file(path)[[db_name]]
     
   if(db_config$password == 'access_token'){
     
-    if(dir.exists('G:/OIS')){
+    if(hard_token){
       
       # to do, get token from H:/ ...  token.txt
       # overwrite after prompt when expired
