@@ -26,7 +26,7 @@ get_azure_access_token <- function(){
 
 
 os_db_con <- function(db_config = NULL, 
-                      path = "%userprofile%/db_configs/db_configs.yml",
+                      path = "file.path(Sys.getenv('USERPROFILE'), 'db_configs', 'db_configs.yml')",
                       db_name = 'refdb_cloud',
                       hard_token = FALSE){
 
