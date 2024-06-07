@@ -55,7 +55,7 @@ os_sheet <- function(wb,
                      round_digits = 2,
                      total_row = FALSE,
                      total_column = FALSE,
-                     font_custom = 'corbel'){
+                     font_custom = 'calibri'){
   
   styles <- get_table_styles(n_digits = round_digits, 
                              font_custom = font_custom)
@@ -156,7 +156,7 @@ os_table <- function(df_or_list,
                      overwrite = T,
                      total_row = F,
                      total_column = FALSE,
-                     font_custom = 'corbel') {
+                     font_custom = 'calibri') {
 
   # Converteert data naar excelbestand met tabellen in O&S-huisstijl. Bij list worden meerdere tabbladen aangemaakt...
   # ...Gebruikt os_sheet() voor opmaken van sheets. 
@@ -173,7 +173,7 @@ os_table <- function(df_or_list,
   # overwrite             : bool, bestand overschrijven
   # total_row             : bool, moet laatste rij opmaak van een totaalrij krijgen?
   # total_column          : bool, moet laatste kolom opmaak van een totaalrij krijgen? 
-  # font_custom           : str, font kiezen, default 'corbel'
+  # font_custom           : str, font kiezen, default 'calibri'
 
 
                   
