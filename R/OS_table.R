@@ -9,27 +9,27 @@ library(purrr)
 
 # Define styles
 
-get_table_styles <- function(n_digits = 2, font_custom = "corbel"){
+get_table_styles <- function(n_digits = 2, font_custom = "calibri"){
   
   digit_format <- ifelse(n_digits == 0, '0', paste0('0.', paste(rep(0, n_digits), collapse = '')))
   
   styles <- list(
     "top_row" = createStyle(
       textDecoration = "bold",
-      fgFill = "#00a0e6",
+      fgFill = "#004699",
       fontColour = "white"
     ),
     "bottom_row" = createStyle(
       border = "Bottom",
       borderStyle = "medium",
-      borderColour="#00a0e6"
+      borderColour="#004699"
     ),
     "total_row" = createStyle(
       textDecoration = "bold",
       border = "Bottom",
       borderStyle = "medium",
       fgFill = "#B1D9F5",
-      borderColour="#00a0e6"
+      borderColour="#004699"
     ),
     "total_column" = createStyle(
       fgFill = "#B1D9F5",
