@@ -1,7 +1,7 @@
 theme_os <- function(orientation="vertical", legend_position = "bottom", drop_axis_titles = F){
   
-  grDevices::windowsFonts("Corbel" = grDevices::windowsFont("Corbel"))
-  font <- "Corbel"
+  grDevices::windowsFonts("Amsterdam Sans" = grDevices::windowsFont("Amsterdam Sans"))
+  font <- "Amsterdam Sans"
   
   theme <- ggplot2::theme_bw() +
     ggplot2::theme(
@@ -40,8 +40,8 @@ theme_os <- function(orientation="vertical", legend_position = "bottom", drop_ax
 
 theme_os_map <- function(legend_position = c(0, 0)){
   
-  grDevices::windowsFonts("Corbel" = grDevices::windowsFont("Corbel"))
-  font <- "Corbel"
+  grDevices::windowsFonts("Amsterdam Sans" = grDevices::windowsFont("Amsterdam Sans"))
+  font <- "Amsterdam Sans"
   
   
   ggplot2::theme_bw() +
