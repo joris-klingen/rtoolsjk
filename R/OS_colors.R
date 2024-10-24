@@ -1,5 +1,5 @@
 library(tidyverse)
-# library(jsonlite)
+library(jsonlite)
 
 # Lijst met color palettes
 palettes_list <- list(
@@ -58,5 +58,50 @@ scale_fill_os <- function(palette = "wild", discrete = TRUE, reverse = FALSE, ad
 }
 
 
+get_os_colors <- function(type, kleur, aantal, invert = FALSE){
+  # type (str): type of (oplopend, uiteenlopend, discreet)
+  # kleur (str):
+  #   oplopend:
+  #   'blauw' |
+  #   'paars' |
+  #   'groen' |
+  #   'roze' |
+  #   'lichtblauw' |
+  #   'oranje' |
+  #   'lichtgroen' |
+  #   'grijs'
+  # uiteenlopend:
+  #   'stoplicht (1-7)' |
+  #   'blauw - grijs - groen (1-9)' |
+  #   'paars - grijs - lichtblauw (1-9)' |
+  #   'blauw - geel - groen (1-9)' |
+  #   'rood - geel - lichtblauw (1-9)'
+  # discreet:
+  #   'discreet (1-9)' |
+  #   'fruitig (1-9)' |
+  #   'fruitig (1-9, anders gesorteerd)' |
+  #   'waterkant (1-9)' |
+  #   'waterkant (1-9, anders gesorteerd)' |
+  #   'zonsondergang (1-9)'
+  # aantal (str): number of colors returned
+  # invert (bool, optional): invert colors. Defaults to False.
+  
+  
+  if (!(type %in% c("oplopend", "uiteenlopend", "discreet"))){
+    rlang::abort("Type should be `oplopend`, `uiteenlopend` or `discreet`")
+  }
+  
+  
+  url = "https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/references/OS_colors.json"
+  colors = fromJSON(url)
+  
+  colors = colors[[type]][[kleur]][[aantal]]
+  
+  if (invert){
+    colors = rev(colors)
+  }
+  
+  colors
+}
 
 

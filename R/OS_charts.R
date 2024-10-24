@@ -58,7 +58,7 @@ os_base_bar <- function(
     geom_col(width = 0.8, position = position) +
     scale_fill_manual(values=colors) +
     scale_color_manual(values = text_color) +
-    guides(fill = guide_legend(reverse = T)) +
+    guides(fill = guide_legend(reverse = invert_legend)) +
     geom_hline(yintercept = 0) +
     theme_os(
       orientation=ifelse(flip == T, "horizontal", "vertical"), drop_axis_titles = T)
@@ -93,7 +93,7 @@ os_stacked_bar_abs <- function(
   )
   
   label <- data %>% pull({{ y }})
-  if (minimum_label_value > 0){
+  if (minimum_label_value >= 0){
     label <- ifelse(label < minimum_label_value, "", format_abs(round(label, 0)))
   }
   
@@ -105,7 +105,7 @@ os_stacked_bar_abs <- function(
       show.legend=FALSE,
       fontface="bold"
     ) + 
-    scale_y_continuous(labels=function(x) format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
+    scale_y_continuous(labels=function(x) format_abs(x))
   
   if (flip){
     fig <- fig + coord_flip()
@@ -137,12 +137,12 @@ os_stacked_bar_perc <- function(
   )
   
   label <- data %>% pull({{ y }})
-  if (minimum_label_value > 0){
-    label <- ifelse(label < minimum_label_value/100, 
+  if (minimum_label_value >= 0){
+    label <- ifelse(label < minimum_label_value, 
                     str_trim(""), 
                     str_trim(round(label * 100, 0)))
   }
-  
+
   fig <- fig +
     geom_text(aes(
       label = label,
@@ -171,7 +171,7 @@ os_grouped_bar_perc <- function(
     flip = F  
 ){
   fig <- os_base_bar(
-    data=data, 
+    data = data, 
     x = {{ x }}, 
     y = {{ y }}, 
     color_col = {{ color_col }},
@@ -181,11 +181,20 @@ os_grouped_bar_perc <- function(
     flip = flip
   )
   
+  
+  if (flip){
+    dodge <- position_dodge2(0.8)
+  } else {
+    dodge <- position_dodge2(0.65)
+  }
+  
+  
   fig <- fig +
     geom_text(aes(
-      label = round(round({{ y }} * 100, 0) , 0),
-      color={{ color_col }}),
-      position = position_dodge2(0.8),
+        label = round({{ y }} * 100, 0),
+        color={{ color_col }}
+        ),
+      position = dodge,
       hjust = 1.3,
       show.legend = FALSE,
       fontface = "bold"
