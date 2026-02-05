@@ -28,11 +28,11 @@ get_table_styles <- function(n_digits = 2, font_custom = "calibri"){
       textDecoration = "bold",
       border = "Bottom",
       borderStyle = "medium",
-      fgFill = "#B1D9F5",
+      fgFill = "#B8BCDD",
       borderColour="#004699"
     ),
     "total_column" = createStyle(
-      fgFill = "#B1D9F5",
+      fgFill = "#B8BCDD",
     ),
     "font" = createStyle(fontSize = 9, fontName = font_custom),
     "l_align" = createStyle(halign = "left"),
