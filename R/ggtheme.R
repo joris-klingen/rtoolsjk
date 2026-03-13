@@ -1,8 +1,8 @@
-theme_custom <- function(orientation="vertical", legend_position = "bottom", drop_axis_titles = F){
-  
+rk_theme <- function(orientation="vertical", legend_position = "bottom", drop_axis_titles = F){
+
   grDevices::windowsFonts("Amsterdam Sans" = grDevices::windowsFont("Amsterdam Sans"))
   font <- "Amsterdam Sans"
-  
+
   theme <- ggplot2::theme_bw() +
     ggplot2::theme(
       axis.text = ggplot2::element_text(family = font, size = 13),
@@ -20,38 +20,38 @@ theme_custom <- function(orientation="vertical", legend_position = "bottom", dro
       panel.border = ggplot2::element_rect(fill = "transparent", color = NA),
       strip.text = ggplot2::element_text(color = "black", family = font, face = "bold", size = 15)
     )
-  
+
   if (orientation %in% c("vertical", "v")){
     theme <- theme + ggplot2::theme(panel.grid.major.x = element_blank())
   } else if (orientation %in% c("horizontal", "h")){
     theme <- theme + ggplot2::theme(panel.grid.major.y = element_blank())
   }
-  
+
   if (drop_axis_titles){
     theme <- theme + ggplot2::theme(
       axis.title.x=element_blank(),
       axis.title.y=element_blank()
     )
   }
-  
+
   return(theme)
 }
 
 
-theme_custom_map <- function(legend_position = c(0, 0)){
-  
+rk_theme_map <- function(legend_position = c(0, 0)){
+
   grDevices::windowsFonts("Amsterdam Sans" = grDevices::windowsFont("Amsterdam Sans"))
   font <- "Amsterdam Sans"
-  
-  
+
+
   ggplot2::theme_bw() +
     ggplot2::theme(
-      axis.line = element_blank(), 
-      axis.text = element_blank(), 
-      axis.ticks = element_blank(), 
-      axis.title = element_blank(), 
-      panel.background = element_blank(), 
-      panel.grid = element_blank(), panel.spacing = unit(0, "lines"), plot.background = element_blank(), 
+      axis.line = element_blank(),
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title = element_blank(),
+      panel.background = element_blank(),
+      panel.grid = element_blank(), panel.spacing = unit(0, "lines"), plot.background = element_blank(),
       legend.justification = c(0, 0), legend.position = legend_position,
       plot.caption = ggplot2::element_text(family = font, size = 14),
       plot.subtitle = ggplot2::element_text(family = font, size = 15),
@@ -60,7 +60,7 @@ theme_custom_map <- function(legend_position = c(0, 0)){
       legend.title = ggplot2::element_text(family = font, lineheight = 1.2, size = 13),
       panel.border = ggplot2::element_rect(fill = "transparent", color = NA),
       strip.text = ggplot2::element_text(color = "black", family = font, face = "bold", size = 15)
-    ) 
-  
-  
+    )
+
+
 }

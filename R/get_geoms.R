@@ -1,20 +1,18 @@
 library(sf)
 
-get_geom <- function(gebieden = 'wijken',
-                        peiljaar = 2022,
-                        zonder_water = T){
-  
-  
+rk_get_geom <- function(areas = 'wijken',
+                        ref_year = 2022,
+                        exclude_water = T){
+
+
   geom <- st_read(
     paste('https://gitlab.com/os-amsterdam/datavisualisatie-onderzoek-en-statistiek/-/raw/develop/public/geo/amsterdam',
-          peiljaar,
-          paste0(gebieden,'-', peiljaar,'-zw-geo.json'), 
+          ref_year,
+          paste0(areas,'-', ref_year,'-zw-geo.json'),
           sep = '/'))
-  
-  
+
+
   return(geom)
-  
-  
+
+
 }
-
-

@@ -1,52 +1,39 @@
 library(rlang)
 
 
-if(!exists("rtools")) {
+if(!exists("rkit")) {
 
-  # create rtools environment
-  rtools <- new.env(parent=globalenv())
-
-  # source all R files locally
-  rtools_dir <- file.path(dirname(sys.frame(1)$ofile %||% "."), ".")
+  # create rkit environment
+  rkit <- new.env(parent=globalenv())
 
   local_files <- c(
-    'db_configs.R',
     'table.R',
     'lookups.R',
     'ggtheme.R',
-    'statistiek_hulpfuncties.R',
     'geolocate.R',
     'get_geoms.R',
-    'vacature_tools.R',
     'categorize.R',
     'charts.R',
     'colors.R'
   )
 
   for (f in local_files) {
-    source(file.path('R', f), local = rtools)
+    source(file.path('R', f), local = rkit)
   }
 
   # activate
-  attach(rtools)
+  attach(rkit)
 
 }
 
-# attach(rtools)
-
-show_functions <- function(env = rtools) {
+rk_show_functions <- function(env = rkit) {
   print(names(env))
-
-  cat(paste("Functions in rtools: "))
-
+  cat(paste("Functions in rkit: "))
   cat(paste(names(env), collapse = " \n "))
 }
 
 
 # print
-cat(' Functions from rtoolsjk loaded... \n',
+cat(' Functions from rkit loaded... \n',
     '\n',
-    '...to show all functions: show_functions()')
-
-
-
+    '...to show all functions: rk_show_functions()')
