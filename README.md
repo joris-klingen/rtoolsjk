@@ -25,9 +25,9 @@ rk_show_functions()
 | `charts.R` | Bar chart functions (`rk_barchart`, `rk_stacked_bar_*`, `rk_grouped_bar_*`) |
 | `ggtheme.R` | Custom ggplot2 themes (`rk_theme`, `rk_theme_map`) |
 | `categorize.R` | Convert continuous variables to labeled categories (`rk_cut`) |
-| `lookups.R` | Geographic lookup tables (`rk_get_geo_json`, `rk_extract_name_code_table`) |
-| `geolocate.R` | PDOK geolocation (`rk_get_pdok_location`) |
-| `get_geoms.R` | Fetch Amsterdam geometry data (`rk_get_geom`) |
+| `geolocate.R` | NL-wide PDOK geolocation (`rk_get_pdok_location`) |
+| `lookups.R` | Amsterdam geo lookup tables (`rk_get_geo_json`, `rk_extract_name_code_table`) |
+| `get_geoms.R` | Amsterdam geometry data (`rk_get_geom`) |
 
 ## Acknowledgement
 

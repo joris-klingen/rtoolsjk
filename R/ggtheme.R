@@ -1,7 +1,4 @@
-rk_theme <- function(orientation="vertical", legend_position = "bottom", drop_axis_titles = F){
-
-  grDevices::windowsFonts("Amsterdam Sans" = grDevices::windowsFont("Amsterdam Sans"))
-  font <- "Amsterdam Sans"
+rk_theme <- function(orientation="vertical", legend_position = "bottom", drop_axis_titles = F, font = "sans"){
 
   theme <- ggplot2::theme_bw() +
     ggplot2::theme(
@@ -38,10 +35,7 @@ rk_theme <- function(orientation="vertical", legend_position = "bottom", drop_ax
 }
 
 
-rk_theme_map <- function(legend_position = c(0, 0)){
-
-  grDevices::windowsFonts("Amsterdam Sans" = grDevices::windowsFont("Amsterdam Sans"))
-  font <- "Amsterdam Sans"
+rk_theme_map <- function(legend_position = c(0, 0), font = "sans"){
 
 
   ggplot2::theme_bw() +
