@@ -1,6 +1,6 @@
 library(sf)
 
-os_get_geom <- function(gebieden = 'wijken',
+get_geom <- function(gebieden = 'wijken',
                         peiljaar = 2022,
                         zonder_water = T){
   

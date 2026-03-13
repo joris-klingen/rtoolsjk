@@ -1,7 +1,4 @@
-# dit script bevat algemeen bruikbare functies voor huisstijl van tabellen
-# wordt beheerd door Joris (j.klingen@amsterdam.nl) en Daan (d.schmitz@amsterdam.nl)
-# vul gerust aan
-
+# functies voor huisstijl van tabellen
 # Last update: 05-06-2022
 
 library(openxlsx)
@@ -44,7 +41,7 @@ get_table_styles <- function(n_digits = 2, font_custom = "calibri"){
 }
 
 
-os_sheet <- function(wb, 
+styled_sheet <- function(wb, 
                      df, 
                      sheet_name = "Sheet1", 
                      title_height = 14.4,
@@ -144,7 +141,7 @@ get_df_as_list <- function(df_or_list, sheet_name){
 }
 
 
-os_table <- function(df_or_list, 
+styled_table <- function(df_or_list, 
                      path, 
                      sheet_name = "Sheet1", 
                      title_height = 14.4,
@@ -158,8 +155,8 @@ os_table <- function(df_or_list,
                      total_column = FALSE,
                      font_custom = 'calibri') {
 
-  # Converteert data naar excelbestand met tabellen in O&S-huisstijl. Bij list worden meerdere tabbladen aangemaakt...
-  # ...Gebruikt os_sheet() voor opmaken van sheets. 
+  # Converteert data naar excelbestand met tabellen in huisstijl. Bij list worden meerdere tabbladen aangemaakt...
+  # ...Gebruikt styled_sheet() voor opmaken van sheets. 
   #
   # df_of_list            : list(names = dataframes) or df met data. Names in list worden sheetnamen in excel
   # path                  : str, bestandspad van output
@@ -184,7 +181,7 @@ os_table <- function(df_or_list,
   for (name in names(named_list)){
     df <- named_list[[name]]
     
-    os_sheet(wb = wb, 
+    styled_sheet(wb = wb, 
              df = df, 
              sheet_name = name, 
              title_height = title_height,
@@ -248,7 +245,7 @@ style_sheet <- function(wb, df, sheet_name, add_perc_to_cols, left_align_cols){
 
 
 
-# let op, deze is kopie van os_table_list voor backward comp, vervalt op termijn
+# let op, deze is kopie van styled_table_list voor backward comp, vervalt op termijn
 write_named_list_with_styling <- function(named_list, path, overwrite = T){
   wb <- createWorkbook()
   styles <- get_table_styles()

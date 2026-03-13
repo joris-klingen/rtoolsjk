@@ -4,7 +4,7 @@ get_txt_color_based_on_bg <- function(colors){
   return(txt_color)
 }
 
-os_barchart <- function(data, x, y, labels=F, sort=F, fill_color="#004699"){
+barchart <- function(data, x, y, labels=F, sort=F, fill_color="#004699"){
   if (sort==T){
     print(data)
     data <- data %>% 
@@ -27,7 +27,7 @@ os_barchart <- function(data, x, y, labels=F, sort=F, fill_color="#004699"){
   
   max_y <- data %>% summarise(max = max({{ y }}, na.rm=TRUE)) %>% pull(max)
   fig <- fig + 
-    theme_os(orientation="horizontal", drop_axis_titles = T) + 
+    theme_custom(orientation="horizontal", drop_axis_titles = T) + 
     scale_y_continuous(
       labels = scales::percent, 
       limits = c(0, max_y * 1.03), 
@@ -38,7 +38,7 @@ os_barchart <- function(data, x, y, labels=F, sort=F, fill_color="#004699"){
 }
 
 
-os_base_bar <- function(
+base_bar <- function(
     data, 
     x, 
     y, 
@@ -60,7 +60,7 @@ os_base_bar <- function(
     scale_color_manual(values = text_color) +
     guides(fill = guide_legend(reverse = invert_legend)) +
     geom_hline(yintercept = 0) +
-    theme_os(
+    theme_custom(
       orientation=ifelse(flip == T, "horizontal", "vertical"), drop_axis_titles = T)
   
   return(fig)
@@ -71,7 +71,7 @@ format_abs <- function(x){
   return(format(x, big.mark = ".", decimal.mark = ",", scientific = FALSE))
 }
 
-os_stacked_bar_abs <- function(
+stacked_bar_abs <- function(
     data, 
     x, 
     y, 
@@ -81,7 +81,7 @@ os_stacked_bar_abs <- function(
     flip = F,
     minimum_label_value = 0
 ){
-  fig <- os_base_bar(
+  fig <- base_bar(
     data=data, 
     x = {{ x }}, 
     y = {{ y }}, 
@@ -115,7 +115,7 @@ os_stacked_bar_abs <- function(
 }
 
 
-os_stacked_bar_perc <- function(
+stacked_bar_perc <- function(
     data, 
     x, 
     y, 
@@ -125,7 +125,7 @@ os_stacked_bar_perc <- function(
     flip = F,
     minimum_label_value = 0
 ){
-  fig <- os_base_bar(
+  fig <- base_bar(
     data=data, 
     x = {{ x }}, 
     y = {{ y }}, 
@@ -161,7 +161,7 @@ os_stacked_bar_perc <- function(
 }
 
 
-os_grouped_bar_perc <- function(
+grouped_bar_perc <- function(
     data, 
     x, 
     y, 
@@ -170,7 +170,7 @@ os_grouped_bar_perc <- function(
     invert_legend = F, 
     flip = F  
 ){
-  fig <- os_base_bar(
+  fig <- base_bar(
     data = data, 
     x = {{ x }}, 
     y = {{ y }}, 
@@ -209,7 +209,7 @@ os_grouped_bar_perc <- function(
 }
 
 
-os_grouped_bar_abs <- function(
+grouped_bar_abs <- function(
     data, 
     x, 
     y, 
@@ -219,7 +219,7 @@ os_grouped_bar_abs <- function(
     flip = F,
     label_outside_value = 0
 ){
-  fig <- os_base_bar(
+  fig <- base_bar(
     data=data, 
     x = {{ x }}, 
     y = {{ y }}, 

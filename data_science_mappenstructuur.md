@@ -13,8 +13,8 @@ Onderstaande structuur geeft richtlijn voor de mappen in een onderzoeksproject.
 ├── references         <- opzoektabellen, hercoderingen etc
 │
 ├── reports            <- output
-│   ├── tables         <- tabellen voor in rapporten etc, meestal in O&S-huistijl
-│   └── figures        <- grafieken in O&S-huisstijl
+│   ├── tables         <- tabellen voor in rapporten etc, meestal in huisstijl
+│   └── figures        <- grafieken in huisstijl
 │
 ├── src                <- scripts (.py, .R, .sql etc) eventueel in submappen
 │   └── [project_init] <- script met packages, projectparameters, bijv __init__.py of project_init.R

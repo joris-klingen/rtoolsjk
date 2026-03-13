@@ -1,4 +1,4 @@
-theme_os <- function(orientation="vertical", legend_position = "bottom", drop_axis_titles = F){
+theme_custom <- function(orientation="vertical", legend_position = "bottom", drop_axis_titles = F){
   
   grDevices::windowsFonts("Amsterdam Sans" = grDevices::windowsFont("Amsterdam Sans"))
   font <- "Amsterdam Sans"
@@ -38,7 +38,7 @@ theme_os <- function(orientation="vertical", legend_position = "bottom", drop_ax
 }
 
 
-theme_os_map <- function(legend_position = c(0, 0)){
+theme_custom_map <- function(legend_position = c(0, 0)){
   
   grDevices::windowsFonts("Amsterdam Sans" = grDevices::windowsFont("Amsterdam Sans"))
   font <- "Amsterdam Sans"

@@ -1,4 +1,4 @@
-os_cut <- function(x, 
+categorize_cut <- function(x, 
                    breaks = NULL, # numerieke vector bijv c(0, 20, 40, 100)
                    start_label = 'lager dan ',
                    end_label = ' en hoger',

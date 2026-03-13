@@ -4,7 +4,7 @@
 # digits: aantal digits geprint in plot
 # excel_output: tabel zonder extra kolommen maken
 
-OS_chisq_table <- function(df, var_x, var_y, digits = 3, excel_output = F){
+chisq_table <- function(df, var_x, var_y, digits = 3, excel_output = F){
   
   perc_table <- df %>% 
     filter(!is.na(.data[[var_x]]) & !is.na(.data[[var_y]])) %>% 

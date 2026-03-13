@@ -1,47 +1,52 @@
 library(rlang)
 
 
-if(!exists("os_tools")) {
+if(!exists("rtools")) {
 
-  # create os environment
-  os_tools <- new.env(parent=globalenv())
-  
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_db_configs.R', local = os_tools)
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_table.R', local = os_tools)
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_lookups.R', local = os_tools)
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_ggtheme.R', local = os_tools)
-  
-  # oude versie
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_statistiek_hulpfuncties.R', local = os_tools)
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_geolocate.R', local = os_tools)
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_get_geoms.R', local = os_tools)
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_vacature_tools.R', local = os_tools)
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_categorize.R', local = os_tools)
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_charts.R', local = os_tools)
-  
-  source('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/R/OS_colors.R', local = os_tools)
+  # create rtools environment
+  rtools <- new.env(parent=globalenv())
+
+  # source all R files locally
+  rtools_dir <- file.path(dirname(sys.frame(1)$ofile %||% "."), ".")
+
+  local_files <- c(
+    'db_configs.R',
+    'table.R',
+    'lookups.R',
+    'ggtheme.R',
+    'statistiek_hulpfuncties.R',
+    'geolocate.R',
+    'get_geoms.R',
+    'vacature_tools.R',
+    'categorize.R',
+    'charts.R',
+    'colors.R'
+  )
+
+  for (f in local_files) {
+    source(file.path('R', f), local = rtools)
+  }
 
   # activate
-  attach(os_tools)
+  attach(rtools)
 
 }
 
-# attach(os_tools)
+# attach(rtools)
 
-os_show_functions <- function(env = os_tools) {
+show_functions <- function(env = rtools) {
   print(names(env))
-  
-  cat(paste("Functions in OS tools: "))
+
+  cat(paste("Functions in rtools: "))
 
   cat(paste(names(env), collapse = " \n "))
 }
 
 
 # print
-cat(' Functions from Tools Onderzoek en Statistiek loaded... \n',
+cat(' Functions from rtoolsjk loaded... \n',
     '\n',
-    '...to show all functions: os_show_functions()')
-
+    '...to show all functions: show_functions()')
 
 
 

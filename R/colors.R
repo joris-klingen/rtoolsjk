@@ -19,11 +19,11 @@ palettes_list <- list(
 )
 
 # # work in progress, onderstaande gebruiken op basis van aantal
-# palettes_list <- read_json('https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/references/OS_colors.json')
+# palettes_list <- read_json('references/colors.json')
 
 
 # Functie om kleuren te interpoleren
-os_palettes <- function(palette = "wild", reverse = FALSE, add_other = FALSE, ...) {
+palettes <- function(palette = "wild", reverse = FALSE, add_other = FALSE, ...) {
   
   pal <- palettes_list[[palette]]
   if (add_other) pal <- c(palettes_list[[palette]], '#e6e6e6')
@@ -34,31 +34,31 @@ os_palettes <- function(palette = "wild", reverse = FALSE, add_other = FALSE, ..
 
 
 # Functie om kleur te veranderen
-scale_color_os <- function(palette = "wild", discrete = TRUE, reverse = FALSE, add_other = FALSE, ...) {
+scale_color_custom <- function(palette = "wild", discrete = TRUE, reverse = FALSE, add_other = FALSE, ...) {
   
-  pal <- os_palettes(palette = palette, reverse = reverse, add_other = add_other)
+  pal <- palettes(palette = palette, reverse = reverse, add_other = add_other)
   
   if (discrete) {
-    discrete_scale("colour", paste0("os_", palette), palette = pal, ...)
+    discrete_scale("colour", paste0("custom_", palette), palette = pal, ...)
   } else {
     scale_color_gradientn(colours = pal(256), ...)
   }
 }
 
 # Functie om fill te veranderen
-scale_fill_os <- function(palette = "wild", discrete = TRUE, reverse = FALSE, add_other = FALSE,...) {
+scale_fill_custom <- function(palette = "wild", discrete = TRUE, reverse = FALSE, add_other = FALSE,...) {
   
-  pal <- os_palettes(palette = palette, reverse = reverse, add_other = add_other)
+  pal <- palettes(palette = palette, reverse = reverse, add_other = add_other)
   
   if (discrete) {
-    discrete_scale("fill", paste0("os_", palette), palette = pal, ...)
+    discrete_scale("fill", paste0("custom_", palette), palette = pal, ...)
   } else {
     scale_color_gradientn(colours = pal(256), ...)
   }
 }
 
 
-get_os_colors <- function(type, kleur, aantal, invert = FALSE){
+get_colors <- function(type, kleur, aantal, invert = FALSE){
   # type (str): type of (oplopend, uiteenlopend, discreet)
   # kleur (str):
   #   oplopend:
@@ -92,7 +92,7 @@ get_os_colors <- function(type, kleur, aantal, invert = FALSE){
   }
   
   
-  url = "https://gitlab.com/os-amsterdam/tools-onderzoek-en-statistiek/-/raw/main/references/OS_colors.json"
+  url = "references/colors.json"
   colors = fromJSON(url)
   
   colors = colors[[type]][[kleur]][[aantal]]
